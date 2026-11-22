@@ -1,3 +1,10 @@
+---
+import { getSite } from '../data/site';
+interface Props { halaman: string; }
+const { halaman } = Astro.props;
+const site = await getSite();
+const cta = halaman === '/kontak' ? '#booking' : '/kontak#booking';
+---
 <div class="sheet" id="nav-sheet" hidden>
   <button class="sheet__scrim" type="button" aria-label="Tutup menu"></button>
   <div class="sheet__panel" role="dialog" aria-modal="true" aria-label="Navigasi">
@@ -6,14 +13,12 @@
       <button class="sheet__close" type="button" aria-label="Tutup menu">&times;</button>
     </div>
     <nav class="sheet__nav" aria-label="Navigasi ponsel">
-      <a href="/" aria-current="page"><span>01</span>Beranda</a>
-      <a href="/layanan"><span>02</span>Layanan</a>
-      <a href="/paket"><span>03</span>Paket</a>
-      <a href="/portofolio"><span>04</span>Portofolio</a>
-      <a href="/tentang"><span>05</span>Tentang</a>
-      <a href="/ulasan"><span>06</span>Ulasan</a>
-      <a href="/kontak"><span>07</span>Kontak</a>
+      {site.nav.map((n, i) => (
+        <a href={n.href} aria-current={halaman === n.href ? 'page' : undefined}>
+          <span>{String(i + 1).padStart(2, '0')}</span>{n.label}
+        </a>
+      ))}
     </nav>
-    <a class="btn btn--gold" href="/kontak#booking">Tanya tanggal</a>
+    <a class="btn btn--gold" href={cta}>Tanya tanggal</a>
   </div>
 </div>

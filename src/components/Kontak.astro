@@ -1,0 +1,24 @@
+---
+import { getSite } from '../data/site';
+
+interface Props { jenis: 'whatsapp' | 'instagram' | 'email'; }
+const { jenis } = Astro.props;
+
+const site = await getSite();
+const nilai = site.kontak[jenis];
+
+const LABEL = {
+  whatsapp: 'NOMOR WHATSAPP',
+  instagram: 'USERNAME IG',
+  email: 'ALAMAT EMAIL',
+} as const;
+
+function tautan(j: string, v: string): string {
+  if (j === 'whatsapp') return 'https://wa.me/' + v.replace(/\D/g, '');
+  if (j === 'instagram') return 'https://instagram.com/' + v.replace(/^@/, '');
+  return 'mailto:' + v;
+}
+---
+{nilai === null
+  ? <span class="pending">[{LABEL[jenis]}]</span>
+  : <a href={tautan(jenis, nilai)}>{nilai}</a>}
