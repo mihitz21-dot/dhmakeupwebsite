@@ -1,0 +1,9 @@
+---
+interface Props { no: string; label: string; class?: string; }
+const { no, label, class: kelas = '' } = Astro.props;
+---
+<div class={('plate ' + kelas).trim()}>
+  <span class="plate__no">{no}</span>
+  <span class="plate__label">{label}</span>
+  <span class="plate__rule" aria-hidden="true"></span>
+</div>
