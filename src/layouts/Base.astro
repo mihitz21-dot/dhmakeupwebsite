@@ -1,0 +1,39 @@
+---
+import '../styles/site.css';
+import Masthead from '../components/Masthead.astro';
+import NavSheet from '../components/NavSheet.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  judul: string;
+  deskripsi: string;
+  halaman: string;
+}
+const { judul, deskripsi, halaman } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script is:inline>
+/* Reveal menyembunyikan elemen sampai JS mengungkapnya. Kalau site.js gagal
+   dimuat, pengaman ini membatalkan penyembunyian supaya konten tidak hilang. */
+document.documentElement.className="js";
+setTimeout(function(){if(!window.__revealReady)document.documentElement.className="";},4000);
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{judul}</title>
+<meta name="description" content={deskripsi}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+</head>
+<body>
+<a class="skip-link" href="#main">Lewati ke konten utama</a>
+<Masthead halaman={halaman} />
+<NavSheet halaman={halaman} />
+<main id="main"><slot /></main>
+<Footer />
+<script>import '../scripts/site.js';</script>
+</body>
+</html>

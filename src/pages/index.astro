@@ -1,0 +1,265 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  judul="DH Makeup Studio | MUA Bandung, Subang, Cimahi, Jakarta"
+  deskripsi="DH Makeup Studio merias soft glam, natural, dan kids makeup untuk wedding, lamaran, pre-wedding, wisuda, dan photoshoot di Bandung, Subang, Cimahi, dan Jakarta."
+  halaman="/"
+>
+
+  <section class="hero">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">01</span>
+    <div class="wrap hero__grid">
+      <div class="hero__copy reveal">
+        <p class="hero__eyebrow">Perias Bandung &middot; Subang &middot; Cimahi &middot; Jakarta</p>
+        <h1 class="display">Rias yang mempertegas wajah Anda, <em>bukan menggantinya.</em></h1>
+        <p class="lede hero__sub">Soft glam, natural look, dan kids makeup untuk wedding, lamaran, pre-wedding, wisuda, dan photoshoot. Berbasis di Bandung, Subang, dan Cimahi, rutin ke Jakarta, bisa diajak ke luar kota.</p>
+        <div class="btn-row hero__cta">
+          <a class="btn btn--primary" href="/kontak#booking">Tanya tanggal Anda</a>
+          <a class="btn btn--line" href="/portofolio">Lihat arsip rias</a>
+        </div>
+        <dl class="hero__facts">
+          <div class="hero__fact">
+            <dt>Area layanan</dt>
+            <dd>Bandung, Subang, Cimahi, Jakarta</dd>
+          </div>
+          <div class="hero__fact">
+            <dt>Pilihan bulu mata</dt>
+            <dd>Dengan atau tanpa, Anda yang pilih</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="hero__figure reveal" style="--i:2">
+        <div class="arch">
+          <div class="ph">
+            <span class="ph__no">01</span>
+            <span class="ph__label">Foto utama</span>
+            <span class="ph__file">assets/foto/hero.jpg</span>
+          </div>
+        </div>
+        <p class="hero__caption">
+          <span>Slot foto utama, rasio 4:5</span>
+          <span>Plat 01</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge" aria-labelledby="spes-h">
+    <div class="wrap">
+      <div class="plate reveal">
+        <span class="plate__no">02</span>
+        <span class="plate__label">Yang dikerjakan</span>
+        <span class="plate__rule" aria-hidden="true"></span>
+      </div>
+      <h2 class="h2 reveal" id="spes-h" style="max-width:17ch;">Tiga hal yang kami kerjakan tiap minggu</h2>
+      <p class="lede reveal" style="margin:1.25rem 0 3.5rem;">Bukan daftar panjang yang menjanjikan segalanya. Tiga ini yang paling sering dipesan, dan tiga ini yang paling kami kuasai.</p>
+
+      <div class="spec">
+        <article class="spec__item spec__item--a reveal">
+          <span class="spec__no">01</span>
+          <h3 class="spec__name">Soft Glam</h3>
+          <p class="spec__desc">Dimensi di mata dan pipi, kulit tetap terlihat kulit. Dipakai untuk resepsi, lamaran, dan acara malam yang banyak foto.</p>
+          <span class="spec__tag">Paling sering dipesan</span>
+        </article>
+        <article class="spec__item spec__item--b reveal" style="--i:1">
+          <span class="spec__no">02</span>
+          <h3 class="spec__name">Natural Look</h3>
+          <p class="spec__desc">Riasan tipis untuk wisuda, akad pagi, dan sesi foto outdoor. Tujuannya Anda masih dikenali di foto, hanya versi yang lebih rapi.</p>
+          <span class="spec__tag">Paling ringan di kulit</span>
+        </article>
+        <article class="spec__item spec__item--c reveal" style="--i:2">
+          <span class="spec__no">03</span>
+          <h3 class="spec__name">Kids Makeup</h3>
+          <p class="spec__desc">Rias anak untuk pentas, foto keluarga, dan acara sekolah. Produk dipilih yang paling ringan dan prosesnya dibuat sesingkat mungkin.</p>
+          <span class="spec__tag">Jarang ditawarkan MUA lain</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink band--tall" aria-labelledby="acara-h">
+    <span class="ghost-no ghost-no--bl" aria-hidden="true">03</span>
+    <div class="wrap">
+      <p class="pull reveal">&ldquo;My goal is simple, to make you look stunning and feel unforgettable.&rdquo;</p>
+      <hr class="rule-double reveal" style="margin:3.5rem 0;">
+
+      <div class="plate reveal">
+        <span class="plate__no">03</span>
+        <span class="plate__label">Jenis acara</span>
+        <span class="plate__rule" aria-hidden="true"></span>
+      </div>
+      <h2 class="h2 reveal" id="acara-h">Acara yang biasa kami tangani</h2>
+
+      <!-- Lima plat kecil di daftar ini: assets/foto/acara-01.jpg sampai
+           acara-05.jpg, rasio 3:4. Ganti isi tiap .occ__thumb dengan
+           <img src="assets/foto/acara-0N.jpg" alt="..." width="." height="."
+           loading="lazy" decoding="async"> saat fotonya sudah ada. -->
+      <ul class="lineup reveal" style="margin-top:3rem;">
+        <li><a href="/layanan#wedding">
+          <span class="occ__thumb"><span class="ph ph--dark"><span class="ph__no">01</span><span class="ph__label">Wedding</span></span></span>
+          <span class="occ__name">Wedding</span>
+          <span class="occ__note">Akad dan resepsi, termasuk hairdo atau penataan hijab dan touch up di lokasi.</span>
+        </a></li>
+        <li><a href="/layanan#lamaran">
+          <span class="occ__thumb"><span class="ph ph--dark"><span class="ph__no">02</span><span class="ph__label">Lamaran</span></span></span>
+          <span class="occ__name">Lamaran</span>
+          <span class="occ__note">Riasan yang kuat di foto dekat, karena acara lamaran rata-rata ruangan kecil.</span>
+        </a></li>
+        <li><a href="/layanan#prewedding">
+          <span class="occ__thumb"><span class="ph ph--dark"><span class="ph__no">03</span><span class="ph__label">Pre-wedding</span></span></span>
+          <span class="occ__name">Pre-wedding</span>
+          <span class="occ__note">Satu kali ganti gaya rambut sudah termasuk, menyesuaikan dua konsep foto.</span>
+        </a></li>
+        <li><a href="/layanan#wisuda">
+          <span class="occ__thumb"><span class="ph ph--dark"><span class="ph__no">04</span><span class="ph__label">Wisuda</span></span></span>
+          <span class="occ__name">Wisuda dan acara</span>
+          <span class="occ__note">Datang pagi buta kalau perlu, karena jadwal wisuda jarang bersahabat.</span>
+        </a></li>
+        <li><a href="/layanan#photoshoot">
+          <span class="occ__thumb"><span class="ph ph--dark"><span class="ph__no">05</span><span class="ph__label">Photoshoot</span></span></span>
+          <span class="occ__name">Photoshoot</span>
+          <span class="occ__note">Disesuaikan dengan lampu studio atau cahaya matahari, dibicarakan dengan fotografernya.</span>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--pale" aria-labelledby="karya-h">
+    <div class="wrap">
+      <div class="plate reveal">
+        <span class="plate__no">04</span>
+        <span class="plate__label">Arsip</span>
+        <span class="plate__rule" aria-hidden="true"></span>
+      </div>
+      <div class="closer reveal" style="margin-bottom:3rem;">
+        <h2 class="h2" id="karya-h">Arsip hasil rias</h2>
+        <a class="btn btn--quiet" href="/portofolio">Buka portofolio lengkap</a>
+      </div>
+
+      <div class="notice reveal" style="margin-bottom:3rem;max-width:48rem;">
+        <strong>Catatan untuk pemilik situs</strong>
+        <span>Slot foto di bawah masih kosong. Taruh berkasnya di folder <code>assets/foto/</code> dengan nama yang tertulis di tiap bingkai, lalu ganti isi bingkai itu dengan tag <code>&lt;img&gt;</code>. Rasio sudah dipesan, jadi tata letak tidak akan bergeser.</span>
+      </div>
+
+      <div class="gallery">
+        <figure class="shot shot--w2 shot--tall reveal">
+          <div class="shot__frame">
+            <div class="ph">
+              <span class="ph__no">01</span>
+              <span class="ph__label">Rias pengantin</span>
+              <span class="ph__file">assets/foto/beranda-01.jpg</span>
+            </div>
+          </div>
+          <figcaption><span class="shot__no">01</span><span class="shot__txt">Rias pengantin, rasio 4:6</span></figcaption>
+        </figure>
+        <figure class="shot shot--w4 shot--wide reveal" style="--i:1">
+          <div class="shot__frame">
+            <div class="ph">
+              <span class="ph__no">02</span>
+              <span class="ph__label">Lamaran</span>
+              <span class="ph__file">assets/foto/beranda-02.jpg</span>
+            </div>
+          </div>
+          <figcaption><span class="shot__no">02</span><span class="shot__txt">Lamaran, rasio 16:12</span></figcaption>
+        </figure>
+        <figure class="shot shot--w4 shot--wide shot--drop reveal" style="--i:2">
+          <div class="shot__frame">
+            <div class="ph">
+              <span class="ph__no">03</span>
+              <span class="ph__label">Natural</span>
+              <span class="ph__file">assets/foto/beranda-03.jpg</span>
+            </div>
+          </div>
+          <figcaption><span class="shot__no">03</span><span class="shot__txt">Natural, rasio 16:12</span></figcaption>
+        </figure>
+        <figure class="shot shot--w2 shot--tall reveal" style="--i:3">
+          <div class="shot__frame">
+            <div class="ph">
+              <span class="ph__no">04</span>
+              <span class="ph__label">Kids makeup</span>
+              <span class="ph__file">assets/foto/beranda-04.jpg</span>
+            </div>
+          </div>
+          <figcaption><span class="shot__no">04</span><span class="shot__txt">Kids makeup, rasio 4:6</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--rose band--tall" aria-labelledby="paket-h">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">05</span>
+    <div class="wrap">
+      <div class="plate reveal">
+        <span class="plate__no">05</span>
+        <span class="plate__label">Paket</span>
+        <span class="plate__rule" aria-hidden="true"></span>
+      </div>
+      <div class="closer reveal" style="margin-bottom:3rem;">
+        <h2 class="h2" id="paket-h" style="max-width:18ch;">Tiga paket, dibedakan oleh jumlah touch up</h2>
+        <a class="btn btn--quiet" href="/paket">Rincian dan tambahan</a>
+      </div>
+
+      <div class="tiers">
+        <article class="tier reveal">
+          <span class="tier__no">01</span>
+          <h3 class="tier__name">Essential</h3>
+          <p class="tier__price">Rp 1.500.000</p>
+          <p class="tier__for">Untuk acara sekali jalan: wisuda, lamaran kecil, sesi foto keluarga.</p>
+          <p class="tier__mark">Tanpa touch up di lokasi</p>
+          <ul>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Makeup dan hairdo atau penataan hijab</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Bulu mata, kalau Anda mau pakai</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Lipstik dan spons untuk dibawa pulang</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Satu kali konsultasi online</span></li>
+          </ul>
+          <a class="btn btn--line" href="/kontak#booking">Tanya tanggal untuk Essential</a>
+        </article>
+
+        <article class="tier reveal" style="--i:1">
+          <span class="tier__no">02</span>
+          <h3 class="tier__name">Signature</h3>
+          <p class="tier__price">Rp 2.500.000</p>
+          <p class="tier__for">Untuk acara yang berjalan setengah hari dan butuh dirapikan sekali di tengah.</p>
+          <p class="tier__mark">Satu kali touch up di lokasi</p>
+          <ul>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Semua isi paket Essential</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Satu kali retouch sebelum acara mulai</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Konsultasi bentuk wajah dan warna kulit</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Biaya perjalanan dalam kota sudah termasuk</span></li>
+          </ul>
+          <a class="btn btn--line" href="/kontak#booking">Tanya tanggal untuk Signature</a>
+        </article>
+
+        <article class="tier tier--full reveal" style="--i:2">
+          <span class="tier__no">03</span>
+          <h3 class="tier__name">Bridal</h3>
+          <p class="tier__price">Rp 4.500.000</p>
+          <p class="tier__for">Untuk hari pernikahan penuh, dari akad pagi sampai resepsi malam.</p>
+          <p class="tier__mark">Tiga kali touch up, kami standby</p>
+          <ul>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Semua isi paket Signature</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Retouch sebelum akad</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Dua kali retouch saat resepsi, termasuk ganti warna bibir</span></li>
+            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Persiapan kulit sebelum riasan dimulai</span></li>
+          </ul>
+          <a class="btn btn--gold" href="/kontak#booking">Tanya tanggal untuk Bridal</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--blush band--edge" aria-labelledby="tutup-h">
+    <div class="wrap closer reveal">
+      <div>
+        <h2 class="display display--sm" id="tutup-h">Tanggal akhir pekan paling cepat penuh.</h2>
+        <p class="lede" style="margin-top:1.5rem;">Kirim tanggal Anda dulu, nanti kami balas kosong atau tidaknya. Tidak ada kewajiban lanjut sesudah itu.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/kontak#booking">Cek ketersediaan tanggal</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
