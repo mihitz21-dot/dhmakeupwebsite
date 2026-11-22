@@ -1,0 +1,188 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Kontak from '../components/Kontak.astro';
+import { getSite } from '../data/site';
+const site = await getSite();
+---
+<Base
+  judul="Kontak dan cek tanggal | DH Makeup Studio"
+  deskripsi="Cek ketersediaan tanggal DH Makeup Studio untuk wedding, lamaran, pre-wedding, wisuda, dan photoshoot di Bandung, Subang, Cimahi, dan Jakarta."
+  halaman="/kontak"
+>
+
+  <section class="band band--tight">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">07</span>
+    <div class="wrap">
+      <p class="hero__eyebrow reveal">Kontak</p>
+      <h1 class="display reveal" style="max-width:14ch;">Sebutkan tanggalnya lebih dulu.</h1>
+      <p class="lede reveal" style="margin-top:2rem;">Pertanyaan pertama yang bisa kami jawab dengan pasti adalah tanggal Anda kosong atau tidak. Soal paket, harga, dan konsep riasan bisa dibicarakan setelah itu, dan tidak mengikat apa pun.</p>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge" aria-labelledby="saluran-h">
+    <div class="wrap wrap--col">
+      <Plate no="01" label="Saluran" class="reveal" />
+      <h2 class="h2 reveal" id="saluran-h">Jalur yang tersedia</h2>
+
+      <div class="notice reveal" style="margin-top:2rem;">
+        <strong>Catatan untuk pemilik situs</strong>
+        <span>Nomor WhatsApp, username Instagram, dan alamat email di bawah masih kosong. Isi dulu, lalu ubah barisnya menjadi tautan sungguhan (wa.me, instagram.com, mailto:). Selama masih kosong, baris ini sengaja bukan tautan supaya tidak ada tombol yang diklik lalu tidak membawa ke mana-mana.</span>
+      </div>
+
+      <div class="channels reveal" style="margin-top:2rem;">
+        <div class="channel">
+          <span class="channel__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 9.5a7 7 0 0 1-10.3 6.2L3 17l1.3-3.6A7 7 0 1 1 17 9.5Z"/></svg>
+          </span>
+          <span>
+            <span class="channel__k">WhatsApp, paling cepat dibalas</span>
+            <span class="channel__v"><Kontak jenis="whatsapp" /></span>
+          </span>
+          <span class="channel__go">Belum diisi</span>
+        </div>
+        <div class="channel">
+          <span class="channel__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="3.2"/><circle cx="14.2" cy="5.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span>
+            <span class="channel__k">Instagram, arsip terbaru</span>
+            <span class="channel__v"><Kontak jenis="instagram" /></span>
+          </span>
+          <span class="channel__go">Belum diisi</span>
+        </div>
+        <div class="channel">
+          <span class="channel__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="m3 6 7 5 7-5"/></svg>
+          </span>
+          <span>
+            <span class="channel__k">Email, untuk kerja sama dan undangan vendor</span>
+            <span class="channel__v"><Kontak jenis="email" /></span>
+          </span>
+          <span class="channel__go">Belum diisi</span>
+        </div>
+        <div class="channel">
+          <span class="channel__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 17s5.5-4.7 5.5-9A5.5 5.5 0 0 0 4.5 8c0 4.3 5.5 9 5.5 9Z"/><circle cx="10" cy="8" r="2"/></svg>
+          </span>
+          <span>
+            <span class="channel__k">Area yang dilayani</span>
+            <span class="channel__v">{site.area.join(', ')}</span>
+          </span>
+          <span class="channel__go">Luar kota: tanya</span>
+        </div>
+      </div>
+
+      <p class="fine reveal" style="margin-top:1.75rem;">Jam balas: <span class="pending">[JAM OPERASIONAL]</span>. Di luar jam itu pesan tetap masuk dan dibalas keesokan harinya.</p>
+    </div>
+  </section>
+
+  <section class="band band--pale" id="booking" aria-labelledby="form-h">
+    <div class="wrap wrap--col">
+      <Plate no="02" label="Cek tanggal" class="reveal" />
+      <h2 class="h2 reveal" id="form-h" style="max-width:18ch;">Susun pesan untuk dikirim ke WhatsApp</h2>
+      <p class="lede reveal" style="margin-top:1.5rem;">Situs ini belum tersambung ke server, jadi formulir di bawah tidak mengirim apa pun diam-diam. Yang dilakukannya: merapikan isian Anda menjadi satu pesan siap tempel, supaya Anda tidak perlu mengetik ulang semuanya di WhatsApp.</p>
+
+      <form class="form reveal" id="booking-form" novalidate style="margin-top:2.5rem;">
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-nama">Nama <span class="fine">(wajib)</span></label>
+            <input type="text" id="f-nama" name="nama" autocomplete="name" placeholder="Nama Anda" aria-describedby="err-nama">
+            <p class="field__error" id="err-nama" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-wa">Nomor WhatsApp <span class="fine">(wajib)</span></label>
+            <input type="tel" id="f-wa" name="wa" autocomplete="tel" placeholder="081234567890" aria-describedby="err-wa">
+            <p class="field__error" id="err-wa" role="alert"></p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="f-tanggal">Tanggal acara <span class="fine">(wajib)</span></label>
+            <input type="date" id="f-tanggal" name="tanggal" aria-describedby="err-tanggal">
+            <p class="field__error" id="err-tanggal" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-acara">Jenis acara</label>
+            <select id="f-acara" name="acara">
+              <option value="">Belum ditentukan</option>
+              <option>Wedding, akad dan resepsi</option>
+              <option>Wedding, akad saja</option>
+              <option>Lamaran</option>
+              <option>Pre-wedding</option>
+              <option>Wisuda</option>
+              <option>Photoshoot</option>
+              <option>Kids makeup</option>
+              <option>Acara lain</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-paket">Paket yang dilirik</label>
+            <select id="f-paket" name="paket">
+              <option value="">Belum tahu, minta saran</option>
+              <option>Essential, Rp 1.500.000</option>
+              <option>Signature, Rp 2.500.000</option>
+              <option>Bridal, Rp 4.500.000</option>
+              <option>Gabungan dengan tambahan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-lokasi">Lokasi acara</label>
+          <input type="text" id="f-lokasi" name="lokasi" placeholder="Nama gedung atau kecamatan dan kotanya">
+          <p class="field__hint">Cukup kota dan kecamatannya kalau alamat lengkap belum pasti. Ini yang menentukan biaya perjalanan.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-pesan">Catatan</label>
+          <textarea id="f-pesan" name="pesan" placeholder="Jam acara dimulai, nomor plat foto yang Anda suka, riwayat alergi produk, atau apa pun yang perlu kami tahu"></textarea>
+        </div>
+
+        <div class="consent">
+          <input type="checkbox" id="f-consent" name="consent" aria-describedby="err-consent">
+          <div>
+            <label for="f-consent">Saya bersedia dihubungi DH Makeup Studio lewat WhatsApp terkait pertanyaan ini.</label>
+            <p class="field__error" id="err-consent" role="alert"></p>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:0.5rem;">
+          <button class="btn btn--primary" type="submit" id="booking-submit">Susun pesan</button>
+        </div>
+      </form>
+
+      <div class="reveal" style="margin-top:2rem;">
+        <h3 class="h4" style="margin-bottom:0.8rem;">Hasil</h3>
+        <div class="outcome" id="booking-outcome" data-state="empty" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink band--tall" aria-labelledby="sebelum-h">
+    <span class="ghost-no ghost-no--bl" aria-hidden="true">03</span>
+    <div class="wrap wrap--col">
+      <Plate no="03" label="Sebelum mengirim" class="reveal" />
+      <h2 class="h2 reveal" id="sebelum-h">Sebelum Anda mengirim</h2>
+      <div class="faq reveal" style="margin-top:3rem;">
+        <details>
+          <summary>Saya belum tahu mau paket yang mana</summary>
+          <div class="faq__body">Tidak apa-apa, pilih "Belum tahu, minta saran". Sebutkan jam acara dimulai dan jam selesainya, karena itu yang menentukan paket mana yang masuk akal, bukan besarnya acara.</div>
+        </details>
+        <details>
+          <summary>Tanggal saya masih mungkin berubah</summary>
+          <div class="faq__body">Tetap kirim tanggal yang paling mungkin. Kami akan bilang kosong atau tidak, dan Anda tidak terikat apa pun sampai uang muka dibayarkan.</div>
+        </details>
+        <details>
+          <summary>Saya mau rias untuk beberapa orang sekaligus</summary>
+          <div class="faq__body">Tulis berapa orang dan siapa saja di kolom catatan, misalnya pengantin, ibu, dan tiga bridesmaid. Rincian tambahan dan harganya ada di <a href="/paket">halaman paket</a>.</div>
+        </details>
+        <details>
+          <summary>Kulit saya pernah bereaksi pada produk tertentu</summary>
+          <div class="faq__body">Tulis merek atau jenis produknya di kolom catatan. Lebih baik dibahas sekarang daripada ditemukan pagi hari di hari H.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</Base>

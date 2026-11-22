@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import PhotoSlot from '../components/PhotoSlot.astro';
+---
+<Base
+  judul="Portofolio | DH Makeup Studio"
+  deskripsi="Arsip hasil rias DH Makeup Studio: soft glam, natural look, rias adat, kids makeup, dan photoshoot."
+  halaman="/portofolio"
+>
+
+  <section class="band band--tight">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">04</span>
+    <div class="wrap">
+      <p class="hero__eyebrow reveal">Arsip</p>
+      <h1 class="display reveal">Arsip hasil rias</h1>
+      <p class="lede reveal" style="margin-top:2rem;">Dikelompokkan berdasarkan gaya riasan, bukan berdasarkan siapa kliennya. Kalau ada satu foto yang paling mendekati keinginan Anda, sebut nomor platnya saat menghubungi kami.</p>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge">
+    <div class="wrap">
+      <div class="notice reveal" style="margin-bottom:3rem;max-width:48rem;">
+        <strong>Catatan untuk pemilik situs</strong>
+        <span>Seluruh slot foto di halaman ini masih kosong. Taruh berkasnya di folder <code>assets/foto/</code> dengan nama yang tertulis di tiap bingkai, lalu ganti isi bingkai itu dengan tag <code>&lt;img&gt;</code>. Pastikan Anda sudah mengantongi izin klien sebelum fotonya dipublikasikan.</span>
+      </div>
+
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;justify-content:space-between;margin-bottom:3rem;">
+        <div class="filters" id="gallery-filters" role="group" aria-label="Saring berdasarkan gaya riasan">
+          <button type="button" data-filter="all" aria-pressed="true">Semua</button>
+          <button type="button" data-filter="soft-glam" aria-pressed="false">Soft glam</button>
+          <button type="button" data-filter="natural" aria-pressed="false">Natural</button>
+          <button type="button" data-filter="adat" aria-pressed="false">Adat</button>
+          <button type="button" data-filter="anak" aria-pressed="false">Kids makeup</button>
+          <button type="button" data-filter="photoshoot" aria-pressed="false">Photoshoot</button>
+          <button type="button" data-filter="proses" aria-pressed="false">Di balik layar</button>
+        </div>
+        <p class="fine" id="gallery-count" role="status" aria-live="polite">9 foto</p>
+      </div>
+
+      <div class="gallery">
+        <figure class="shot shot--w2 shot--tall reveal" data-look="soft-glam">
+          <div class="shot__frame"><PhotoSlot no="01" label="Soft glam" file="assets/foto/plat-01.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">01</span><span class="shot__txt">Soft glam, resepsi malam</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide reveal" data-look="soft-glam" style="--i:1">
+          <div class="shot__frame"><PhotoSlot no="02" label="Soft glam" file="assets/foto/plat-02.jpg" varian="terang" rasio="16:12" /></div>
+          <figcaption><span class="shot__no">02</span><span class="shot__txt">Soft glam, kulit lembap</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide shot--drop reveal" data-look="natural" style="--i:2">
+          <div class="shot__frame"><PhotoSlot no="03" label="Natural" file="assets/foto/plat-03.jpg" varian="terang" rasio="16:12" /></div>
+          <figcaption><span class="shot__no">03</span><span class="shot__txt">Natural, akad pagi</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="adat" style="--i:3">
+          <div class="shot__frame"><PhotoSlot no="04" label="Adat" file="assets/foto/plat-04.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">04</span><span class="shot__txt">Adat, aksen emas</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="photoshoot">
+          <div class="shot__frame"><PhotoSlot no="05" label="Photoshoot" file="assets/foto/plat-05.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">05</span><span class="shot__txt">Photoshoot, lampu studio</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="natural" style="--i:1">
+          <div class="shot__frame"><PhotoSlot no="06" label="Natural" file="assets/foto/plat-06.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">06</span><span class="shot__txt">Natural, cahaya matahari</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="anak" style="--i:2">
+          <div class="shot__frame"><PhotoSlot no="07" label="Kids makeup" file="assets/foto/plat-07.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">07</span><span class="shot__txt">Kids makeup, pentas sekolah</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide reveal" data-look="soft-glam">
+          <div class="shot__frame"><PhotoSlot no="08" label="Soft glam" file="assets/foto/plat-08.jpg" varian="terang" rasio="16:12" /></div>
+          <figcaption><span class="shot__no">08</span><span class="shot__txt">Soft glam, acara siang</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="proses" style="--i:1">
+          <div class="shot__frame"><PhotoSlot no="09" label="Di balik layar" file="assets/foto/plat-09.jpg" varian="terang" rasio="4:6" /></div>
+          <figcaption><span class="shot__no">09</span><span class="shot__txt">Persiapan alat sebelum mulai</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="outcome" id="gallery-empty" data-state="empty" hidden style="margin-top:2.5rem;max-width:40rem;">
+        <p class="outcome__title">Belum ada foto di kategori ini</p>
+        <p class="outcome__text">Arsip untuk gaya riasan ini belum diunggah. Pilih kategori lain, atau tanyakan langsung dan kami kirimkan contohnya lewat WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="tutup-h">
+    <span class="ghost-no ghost-no--bl" aria-hidden="true">04</span>
+    <div class="wrap closer reveal">
+      <div>
+        <h2 class="display display--sm" id="tutup-h">Ada plat yang mendekati keinginan Anda?</h2>
+        <p class="lede" style="margin-top:1.5rem;">Sebut nomornya saat menghubungi kami. Jauh lebih cepat daripada menjelaskan riasan dengan kata-kata.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--gold" href="/kontak#booking">Kirim nomor plat dan tanggal</a>
+      </div>
+    </div>
+  </section>
+</Base>

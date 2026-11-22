@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import PhotoSlot from '../components/PhotoSlot.astro';
+---
+<Base
+  judul="Tentang | DH Makeup Studio"
+  deskripsi="Siapa di balik DH Makeup Studio, cara kerjanya, dan apa yang dipegang saat merias."
+  halaman="/tentang"
+>
+
+  <section class="hero">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">05</span>
+    <div class="wrap hero__grid">
+      <div class="hero__copy reveal">
+        <p class="hero__eyebrow">Tentang</p>
+        <h1 class="display display--sm">Mempercantik tanpa membuat Anda asing dengan wajah sendiri</h1>
+        <p class="lede hero__sub">Itu satu kalimat yang dipegang DH Makeup Studio sejak awal, dan itu yang membuat kami menolak riasan tebal walaupun diminta. Kalau Anda tidak mengenali diri Anda di cermin, riasannya gagal, sebagus apa pun hasil fotonya.</p>
+      </div>
+      <div class="hero__figure reveal" style="--i:2">
+        <div class="arch">
+          <PhotoSlot no="02" label="Foto perias" file="assets/foto/perias.jpg" rasio="4:5" />
+        </div>
+        <p class="hero__caption">
+          <span>Slot foto perias, rasio 4:5</span>
+          <span>Plat 02</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge" aria-labelledby="cerita-h">
+    <div class="wrap wrap--col">
+      <Plate no="01" label="Cara bekerja" class="reveal" />
+      <h2 class="h2 reveal" id="cerita-h">Cara kami bekerja</h2>
+      <div class="reveal" style="margin-top:2.5rem;display:grid;gap:1.5rem;">
+        <p class="prose drop">DH Makeup Studio melayani rias untuk wedding, lamaran, pre-wedding, wisuda, photoshoot, dan acara keluarga. Basis kami di Bandung, Subang, dan Cimahi, dan kami rutin mengerjakan acara di Jakarta. Untuk kota lain, kami bisa diajak selama jadwalnya memungkinkan.</p>
+        <p class="prose">Spesialisasi kami ada tiga: <strong>soft glam, natural look, dan kids makeup</strong>. Tiga itu yang paling sering dipesan dan tiga itu yang paling kami kuasai. Kami tidak mengaku bisa semua gaya, karena gaya yang jarang dikerjakan biasanya terlihat jarang dikerjakan.</p>
+        <p class="prose">Pilihan pakai bulu mata atau tidak selalu kami tawarkan, dan jawabannya tidak mengubah harga. Banyak klien merasa canggung menolak bulu mata di hari H, jadi kami tanyakan di awal supaya keputusannya sudah selesai sebelum Anda duduk di kursi rias.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--rose band--tall" aria-labelledby="pegangan-h">
+    <span class="ghost-no ghost-no--bl" aria-hidden="true">02</span>
+    <div class="wrap">
+      <p class="pull reveal">&ldquo;Natural, soft glam, &amp; timeless beauty. Kami siap mendampingi momen spesial Anda di Bandung, Subang, Jakarta, dan sekitarnya.&rdquo;</p>
+      <hr class="rule-double reveal" style="margin:3.5rem 0;">
+      <Plate no="02" label="Pegangan" class="reveal" />
+      <h2 class="h2 reveal" id="pegangan-h">Empat hal yang tidak kami tawar</h2>
+      <ul class="occasions reveal" style="margin-top:3rem;">
+        <li><div>
+          <span class="occ__no">01</span>
+          <span class="occ__name">Riasan mengikuti wajah</span>
+          <span class="occ__note">Referensi dari Pinterest dipakai sebagai arah, bukan sebagai target. Bentuk mata dan rahang Anda yang menentukan hasil akhirnya.</span>
+        </div></li>
+        <li><div>
+          <span class="occ__no">02</span>
+          <span class="occ__name">Datang lebih awal</span>
+          <span class="occ__note">Kami tiba sebelum jam yang disepakati. Riasan yang dikejar waktu selalu terlihat dikejar waktu.</span>
+        </div></li>
+        <li><div>
+          <span class="occ__no">03</span>
+          <span class="occ__name">Alat bersih tiap klien</span>
+          <span class="occ__note">Spons dan aplikator sekali pakai diganti per orang, kuas dibersihkan antar pemakaian. Ini standar, bukan nilai jual.</span>
+        </div></li>
+        <li><div>
+          <span class="occ__no">04</span>
+          <span class="occ__name">Jawaban apa adanya</span>
+          <span class="occ__note">Kalau tanggal Anda sudah terisi, kami bilang terisi. Kalau satu gaya tidak akan cocok dengan bentuk wajah Anda, kami bilang sebelum hari H, bukan sesudahnya.</span>
+        </div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--pale" aria-labelledby="angka-h">
+    <div class="wrap wrap--col">
+      <Plate no="03" label="Catatan" class="reveal" />
+      <h2 class="h2 reveal" id="angka-h">Soal pengalaman dan jumlah klien</h2>
+      <p class="prose reveal" style="margin-top:1.5rem;">Situs ini tidak memuat angka jumlah klien, jumlah proyek, atau rata-rata rating. Angka seperti itu sering dipasang tanpa bisa dibuktikan, dan kami memilih tidak ikut. Kalau Anda ingin menilai, lihat arsip foto di <a href="/portofolio">halaman portofolio</a> dan tanyakan apa pun yang mengganjal lewat WhatsApp.</p>
+      <div class="notice reveal" style="margin-top:2rem;">
+        <strong>Catatan untuk pemilik situs</strong>
+        <span>Kalau Anda punya angka yang bisa dibuktikan, misalnya jumlah akad yang dikerjakan tahun ini atau tahun pertama mulai merias, tulis di sini beserta periodenya. Angka dengan periode yang jelas jauh lebih meyakinkan daripada angka bulat tanpa keterangan.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--blush band--edge" aria-labelledby="tutup-h">
+    <div class="wrap closer reveal">
+      <div>
+        <h2 class="display display--sm" id="tutup-h">Mau bicara dulu sebelum memutuskan?</h2>
+        <p class="lede" style="margin-top:1.5rem;">Tanya apa saja, termasuk hal yang Anda takut terdengar sepele. Kebanyakan pertanyaan soal rias memang terdengar sepele sampai hari H tiba.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/kontak#booking">Mulai percakapan</a>
+      </div>
+    </div>
+  </section>
+</Base>

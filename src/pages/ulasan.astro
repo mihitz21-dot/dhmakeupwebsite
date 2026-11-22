@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+---
+<Base
+  judul="Ulasan klien | DH Makeup Studio"
+  deskripsi="Halaman ulasan DH Makeup Studio. Masih kosong sampai ada ulasan klien asli yang bisa ditampilkan dengan izin."
+  halaman="/ulasan"
+>
+
+  <section class="band band--ink band--tall">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">06</span>
+    <div class="wrap wrap--col">
+      <p class="hero__eyebrow reveal" style="color:var(--gold-lit);">Ulasan</p>
+      <h1 class="display reveal">Halaman ini <em>sengaja</em> masih kosong.</h1>
+      <p class="lede reveal" style="margin-top:2rem;">Versi sebelumnya memuat lima ulasan lengkap dengan nama dan foto orang. Tidak satu pun berasal dari klien nyata. Semuanya sudah dihapus. Ulasan baru masuk ke sini setelah ada klien sungguhan yang menulisnya dan mengizinkan namanya dipakai.</p>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge" aria-labelledby="kosong-h">
+    <div class="wrap wrap--col">
+      <h2 class="sr-only" id="kosong-h">Keadaan halaman ulasan</h2>
+      <div class="outcome reveal" data-state="empty">
+        <p class="outcome__title">Belum ada ulasan yang dipublikasikan</p>
+        <p class="outcome__text">Sampai ulasan asli pertama masuk, cara paling jujur menilai hasil kerja kami adalah melihat fotonya langsung, lalu bertanya hal yang spesifik: berapa lama pengerjaannya, bagaimana riasan itu bertahan sampai malam, apakah peliknya hari itu tertangani.</p>
+        <div class="btn-row" style="margin-top:0.75rem;">
+          <a class="btn btn--primary" href="/portofolio">Lihat arsip foto</a>
+          <a class="btn btn--quiet" href="/kontak#booking">Tanya langsung</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--pale" aria-labelledby="pemilik-h">
+    <div class="wrap wrap--col">
+      <Plate no="01" label="Untuk pemilik situs" class="reveal" />
+      <h2 class="h2 reveal" id="pemilik-h">Cara mengisi halaman ini</h2>
+      <p class="prose reveal" style="margin-top:1.5rem;">Bagian berikut ditujukan untuk pemilik situs, bukan untuk calon klien. Hapus seluruh bagian ini begitu ulasan pertama dipasang.</p>
+
+      <div class="notice reveal" style="margin-top:2rem;">
+        <strong>Yang dibutuhkan sebelum sebuah ulasan boleh tayang</strong>
+        <span>Kalimat asli dari klien, apa adanya, tanpa dirapikan sampai berubah artinya. Nama yang mereka izinkan dipakai, boleh nama depan saja. Jenis acara dan bulannya. Izin tertulis, cukup tangkapan layar percakapan WhatsApp.</span>
+      </div>
+
+      <div class="notice reveal" style="margin-top:1.25rem;">
+        <strong>Yang tidak boleh dipasang di sini</strong>
+        <span>Nama dan foto orang yang dikarang. Rating rata-rata tanpa jumlah pengulasnya. Kutipan hasil rangkuman beberapa klien yang dijadikan satu orang. Semua itu akan ketahuan, dan satu ulasan palsu membatalkan kepercayaan pada sembilan yang asli.</span>
+      </div>
+
+      <!-- Salin blok di bawah untuk setiap ulasan asli, lalu hapus tanda komentarnya.
+      <figure class="tier" style="max-width:36rem;margin-top:2rem;">
+        <blockquote class="pull" style="font-size:1.3rem;">
+          Tulis kalimat klien persis seperti yang mereka kirim.
+        </blockquote>
+        <figcaption class="fine" style="border-top:1px solid var(--rule);padding-top:0.9rem;">
+          Nama klien &middot; Jenis acara &middot; Bulan dan tahun
+        </figcaption>
+      </figure>
+      -->
+    </div>
+  </section>
+
+  <section class="band band--blush band--edge" aria-labelledby="tutup-h">
+    <div class="wrap closer reveal">
+      <div>
+        <h2 class="display display--sm" id="tutup-h">Sudah pernah dirias DH Makeup Studio?</h2>
+        <p class="lede" style="margin-top:1.5rem;">Kirim pendapat Anda, termasuk yang kurang enak didengar. Yang kurang enak itu yang membuat pengerjaan berikutnya lebih baik.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/kontak#booking">Kirim pendapat Anda</a>
+      </div>
+    </div>
+  </section>
+</Base>
