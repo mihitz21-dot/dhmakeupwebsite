@@ -5,6 +5,8 @@ export interface Paket {
   untuk: string;
   penanda: string;
   isi: string[];
+  /** Versi ringkas untuk kartu di beranda. */
+  ringkas: { untuk: string; penanda: string; isi: string[] };
 }
 
 export interface Tambahan {
@@ -66,6 +68,16 @@ export async function getSite(): Promise<Site> {
           "Lipstik dan spons untuk dibawa pulang",
           "Satu kali konsultasi online sebelum hari H",
         ],
+        ringkas: {
+          untuk: "Untuk acara sekali jalan: wisuda, lamaran kecil, sesi foto keluarga.",
+          penanda: "Tanpa touch up di lokasi",
+          isi: [
+            "Makeup dan hairdo atau penataan hijab",
+            "Bulu mata, kalau Anda mau pakai",
+            "Lipstik dan spons untuk dibawa pulang",
+            "Satu kali konsultasi online",
+          ],
+        },
       },
       {
         slug: "signature",
@@ -79,6 +91,16 @@ export async function getSite(): Promise<Site> {
           "Konsultasi bentuk wajah dan warna kulit",
           "Biaya perjalanan dalam kota sudah termasuk",
         ],
+        ringkas: {
+          untuk: "Untuk acara yang berjalan setengah hari dan butuh dirapikan sekali di tengah.",
+          penanda: "Satu kali touch up di lokasi",
+          isi: [
+            "Semua isi paket Essential",
+            "Satu kali retouch sebelum acara mulai",
+            "Konsultasi bentuk wajah dan warna kulit",
+            "Biaya perjalanan dalam kota sudah termasuk",
+          ],
+        },
       },
       {
         slug: "bridal",
@@ -92,6 +114,16 @@ export async function getSite(): Promise<Site> {
           "Dua kali retouch saat resepsi, termasuk ganti warna bibir",
           "Persiapan kulit sebelum riasan dimulai",
         ],
+        ringkas: {
+          untuk: "Untuk hari pernikahan penuh, dari akad pagi sampai resepsi malam.",
+          penanda: "Tiga kali touch up, kami standby",
+          isi: [
+            "Semua isi paket Signature",
+            "Retouch sebelum akad",
+            "Dua kali retouch saat resepsi, termasuk ganti warna bibir",
+            "Persiapan kulit sebelum riasan dimulai",
+          ],
+        },
       },
     ],
     tambahan: [

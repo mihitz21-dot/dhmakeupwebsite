@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Plate from '../components/Plate.astro';
+import { getSite, rupiah } from '../data/site';
+const site = await getSite();
 ---
 <Base
   judul="Paket dan harga | DH Makeup Studio"
@@ -21,50 +23,21 @@ import Plate from '../components/Plate.astro';
     <div class="wrap">
       <h2 class="sr-only" id="tier-h">Tiga paket utama</h2>
       <div class="tiers">
-        <article class="tier reveal">
-          <span class="tier__no">01</span>
-          <h3 class="tier__name">Essential</h3>
-          <p class="tier__price">Rp 1.500.000</p>
-          <p class="tier__for">Untuk acara sekali jalan: wisuda, lamaran kecil, sesi foto keluarga. Satu sesi, dua sampai tiga jam pengerjaan.</p>
-          <p class="tier__mark">Tanpa touch up di lokasi</p>
-          <ul>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Makeup dan hairdo atau penataan hijab</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Bulu mata, kalau Anda mau pakai</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Lipstik dan spons untuk dibawa pulang</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Satu kali konsultasi online sebelum hari H</span></li>
-          </ul>
-          <a class="btn btn--line" href="/kontak#booking">Tanya tanggal untuk Essential</a>
-        </article>
-
-        <article class="tier reveal" style="--i:1">
-          <span class="tier__no">02</span>
-          <h3 class="tier__name">Signature</h3>
-          <p class="tier__price">Rp 2.500.000</p>
-          <p class="tier__for">Untuk acara yang berjalan setengah hari dan butuh dirapikan sekali di tengah jalan. Lamaran dan resepsi kecil masuk ke sini.</p>
-          <p class="tier__mark">Satu kali touch up di lokasi</p>
-          <ul>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Semua isi paket Essential</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Satu kali retouch sebelum acara dimulai</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Konsultasi bentuk wajah dan warna kulit</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Biaya perjalanan dalam kota sudah termasuk</span></li>
-          </ul>
-          <a class="btn btn--line" href="/kontak#booking">Tanya tanggal untuk Signature</a>
-        </article>
-
-        <article class="tier tier--full reveal" style="--i:2">
-          <span class="tier__no">03</span>
-          <h3 class="tier__name">Bridal</h3>
-          <p class="tier__price">Rp 4.500.000</p>
-          <p class="tier__for">Untuk hari pernikahan penuh, dari akad pagi sampai resepsi malam. Kami tinggal sampai acara selesai.</p>
-          <p class="tier__mark">Tiga kali touch up, kami standby seharian</p>
-          <ul>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Semua isi paket Signature</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Retouch sebelum akad dimulai</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Dua kali retouch saat resepsi, termasuk ganti warna bibir</span></li>
-            <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>Persiapan kulit sebelum riasan dimulai</span></li>
-          </ul>
-          <a class="btn btn--gold" href="/kontak#booking">Tanya tanggal untuk Bridal</a>
-        </article>
+        {site.paket.map((p, i) => (
+          <article class={i === 2 ? "tier tier--full reveal" : "tier reveal"} style={i > 0 ? `--i:${i}` : undefined}>
+            <span class="tier__no">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="tier__name">{p.nama}</h3>
+            <p class="tier__price">{rupiah(p.harga)}</p>
+            <p class="tier__for">{p.untuk}</p>
+            <p class="tier__mark">{p.penanda}</p>
+            <ul>
+              {p.isi.map((x) => (
+                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5"/></svg><span>{x}</span></li>
+              ))}
+            </ul>
+            <a class={i === 2 ? "btn btn--gold" : "btn btn--line"} href="/kontak#booking">Tanya tanggal untuk {p.nama}</a>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -76,26 +49,13 @@ import Plate from '../components/Plate.astro';
       <p class="lede reveal" style="margin:1.25rem 0 2.5rem;">Harga di bawah berlaku kalau dipesan berbarengan dengan salah satu paket di atas, bukan sebagai pesanan terpisah.</p>
 
       <div class="addons reveal">
-        <div class="addon">
-          <p class="addon__name">Ibu pengantin</p>
-          <p class="addon__desc">Riasan untuk ibu dari mempelai perempuan atau laki-laki, termasuk penataan rambut atau hijab.</p>
-          <p class="addon__price">Rp 750.000 <span class="fine">/ orang</span></p>
-        </div>
-        <div class="addon">
-          <p class="addon__name">Bridesmaid</p>
-          <p class="addon__desc">Riasan senada untuk rombongan pengiring, menyesuaikan warna baju yang dipakai. Minimal tiga orang.</p>
-          <p class="addon__price">Rp 550.000 <span class="fine">/ orang</span></p>
-        </div>
-        <div class="addon">
-          <p class="addon__name">Groom</p>
-          <p class="addon__desc">Merapikan kulit supaya tidak memantulkan cahaya di foto, menata alis, dan merapikan rambut.</p>
-          <p class="addon__price">Rp 350.000 <span class="fine">/ sesi</span></p>
-        </div>
-        <div class="addon">
-          <p class="addon__name">Trial</p>
-          <p class="addon__desc">Sesi percobaan untuk menentukan gaya sebelum hari H. Dua variasi dikerjakan supaya Anda bisa membandingkan langsung di cermin, bukan di foto orang lain.</p>
-          <p class="addon__price">Rp 950.000 <span class="fine">/ sesi</span></p>
-        </div>
+        {site.tambahan.map((t) => (
+          <div class="addon">
+            <p class="addon__name">{t.nama}</p>
+            <p class="addon__desc">{t.deskripsi}</p>
+            <p class="addon__price">{rupiah(t.harga)} <span class="fine">/ {t.satuan}</span></p>
+          </div>
+        ))}
       </div>
     </div>
   </section>

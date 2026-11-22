@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Plate from '../components/Plate.astro';
 import Kontak from '../components/Kontak.astro';
-import { getSite } from '../data/site';
+import { getSite, rupiah } from '../data/site';
 const site = await getSite();
 ---
 <Base
@@ -121,9 +121,7 @@ const site = await getSite();
             <label for="f-paket">Paket yang dilirik</label>
             <select id="f-paket" name="paket">
               <option value="">Belum tahu, minta saran</option>
-              <option>Essential, Rp 1.500.000</option>
-              <option>Signature, Rp 2.500.000</option>
-              <option>Bridal, Rp 4.500.000</option>
+              {site.paket.map((p) => <option>{p.nama}, {rupiah(p.harga)}</option>)}
               <option>Gabungan dengan tambahan</option>
             </select>
           </div>
