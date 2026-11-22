@@ -57,3 +57,6 @@ next-env.d.ts
 .eslintcache
 .turbo
 .swc
+
+# bytecode Python
+__pycache__/
