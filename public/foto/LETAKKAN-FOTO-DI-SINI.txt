@@ -1,0 +1,58 @@
+Folder foto DH Makeup Studio
+============================
+
+Setiap bingkai kosong di situs menuliskan nama berkas yang dicarinya.
+Taruh fotonya di folder ini dengan nama persis seperti itu.
+
+Daftar slot dan rasio yang sudah dipesan:
+
+  hero.jpg          4:5    potret utama di beranda
+  perias.jpg        4:5    potret perias di halaman Tentang
+
+  beranda-01.jpg    4:6    rias pengantin
+  beranda-02.jpg    16:12  lamaran
+  beranda-03.jpg    16:12  natural
+  beranda-04.jpg    4:6    kids makeup
+
+  acara-01.jpg      4:5    plat kecil di daftar acara, wedding
+  acara-02.jpg      4:5    plat kecil di daftar acara, lamaran
+  acara-03.jpg      4:5    plat kecil di daftar acara, pre-wedding
+  acara-04.jpg      4:5    plat kecil di daftar acara, wisuda
+  acara-05.jpg      4:5    plat kecil di daftar acara, photoshoot
+
+  plat-01.jpg       16:11  soft glam
+  plat-02.jpg       4:6    soft glam
+  plat-03.jpg       4:6    natural
+  plat-04.jpg       4:6    adat
+  plat-05.jpg       4:6    photoshoot
+  plat-06.jpg       16:11  natural
+  plat-07.jpg       16:11  photoshoot
+  plat-08.jpg       4:6    soft glam
+  plat-09.jpg       4:6    di balik layar
+
+Plat kecil pada daftar acara di beranda hanya menampilkan nomornya saja,
+tanpa tulisan nama berkas, supaya tidak ramai. Nomor pada plat itu sama
+dengan nomor berkasnya: plat bernomor 03 diisi acara-03.jpg.
+
+Setelah berkasnya ada, ganti isi bingkai di HTML. Contoh, dari:
+
+  <div class="ph"><span class="ph__no">01</span>...</div>
+
+menjadi:
+
+  <img src="assets/foto/plat-01.jpg"
+       alt="Jelaskan riasannya, bukan nama orangnya"
+       width="960" height="660" loading="lazy" decoding="async">
+
+Untuk foto pertama yang terlihat tanpa menggulir (hero.jpg, perias.jpg,
+dan plat-01.jpg), ganti loading="lazy" dengan fetchpriority="high" supaya
+peramban memuatnya lebih dulu.
+
+Tiga hal yang perlu dijaga:
+
+1. Tulis width dan height sesuai ukuran asli berkasnya. Tanpa itu, tata
+   letak akan melompat saat foto selesai dimuat.
+2. Isi alt dengan deskripsi riasannya, bukan nama klien. Alt dibaca
+   pembaca layar dan terindeks mesin pencari.
+3. Pastikan klien mengizinkan fotonya dipakai di situs, bukan hanya di
+   Instagram. Simpan izinnya, cukup tangkapan layar percakapan.

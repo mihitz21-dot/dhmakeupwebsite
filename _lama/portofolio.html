@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script>document.documentElement.className="js";
+setTimeout(function(){if(!window.__revealReady)document.documentElement.className="";},4000);</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portofolio | DH Makeup Studio</title>
+<meta name="description" content="Arsip hasil rias DH Makeup Studio: soft glam, natural look, rias adat, kids makeup, dan photoshoot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <a class="mark" href="index.html" aria-label="DH Makeup Studio, ke beranda">
+      <span class="mark__glyph" aria-hidden="true">DH</span>
+      <span>
+        <span class="mark__name">DH Makeup Studio</span>
+        <span class="mark__sub">Bandung &middot; Subang &middot; Cimahi &middot; Jakarta</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="index.html">Beranda</a>
+      <a href="layanan.html">Layanan</a>
+      <a href="paket.html">Paket</a>
+      <a href="portofolio.html" aria-current="page">Portofolio</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="ulasan.html">Ulasan</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <a class="btn btn--primary btn-cta" href="kontak.html#booking">Tanya tanggal</a>
+    <button class="menu-btn" id="nav-open" type="button" aria-expanded="false" aria-controls="nav-sheet">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h14M1 8h14M1 12h14"/></svg>
+      Menu
+    </button>
+  </div>
+</header>
+
+<div class="sheet" id="nav-sheet" hidden>
+  <button class="sheet__scrim" type="button" aria-label="Tutup menu"></button>
+  <div class="sheet__panel" role="dialog" aria-modal="true" aria-label="Navigasi">
+    <div class="sheet__head">
+      <span class="mark__sub">Halaman</span>
+      <button class="sheet__close" type="button" aria-label="Tutup menu">&times;</button>
+    </div>
+    <nav class="sheet__nav" aria-label="Navigasi ponsel">
+      <a href="index.html"><span>01</span>Beranda</a>
+      <a href="layanan.html"><span>02</span>Layanan</a>
+      <a href="paket.html"><span>03</span>Paket</a>
+      <a href="portofolio.html" aria-current="page"><span>04</span>Portofolio</a>
+      <a href="tentang.html"><span>05</span>Tentang</a>
+      <a href="ulasan.html"><span>06</span>Ulasan</a>
+      <a href="kontak.html"><span>07</span>Kontak</a>
+    </nav>
+    <a class="btn btn--gold" href="kontak.html#booking">Tanya tanggal</a>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="band band--tight">
+    <span class="ghost-no ghost-no--tr" aria-hidden="true">04</span>
+    <div class="wrap">
+      <p class="hero__eyebrow reveal">Arsip</p>
+      <h1 class="display reveal">Arsip hasil rias</h1>
+      <p class="lede reveal" style="margin-top:2rem;">Dikelompokkan berdasarkan gaya riasan, bukan berdasarkan siapa kliennya. Kalau ada satu foto yang paling mendekati keinginan Anda, sebut nomor platnya saat menghubungi kami.</p>
+    </div>
+  </section>
+
+  <section class="band band--paper band--edge">
+    <div class="wrap">
+      <div class="notice reveal" style="margin-bottom:3rem;max-width:48rem;">
+        <strong>Catatan untuk pemilik situs</strong>
+        <span>Seluruh slot foto di halaman ini masih kosong. Taruh berkasnya di folder <code>assets/foto/</code> dengan nama yang tertulis di tiap bingkai, lalu ganti isi bingkai itu dengan tag <code>&lt;img&gt;</code>. Pastikan Anda sudah mengantongi izin klien sebelum fotonya dipublikasikan.</span>
+      </div>
+
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;justify-content:space-between;margin-bottom:3rem;">
+        <div class="filters" id="gallery-filters" role="group" aria-label="Saring berdasarkan gaya riasan">
+          <button type="button" data-filter="all" aria-pressed="true">Semua</button>
+          <button type="button" data-filter="soft-glam" aria-pressed="false">Soft glam</button>
+          <button type="button" data-filter="natural" aria-pressed="false">Natural</button>
+          <button type="button" data-filter="adat" aria-pressed="false">Adat</button>
+          <button type="button" data-filter="anak" aria-pressed="false">Kids makeup</button>
+          <button type="button" data-filter="photoshoot" aria-pressed="false">Photoshoot</button>
+          <button type="button" data-filter="proses" aria-pressed="false">Di balik layar</button>
+        </div>
+        <p class="fine" id="gallery-count" role="status" aria-live="polite">9 foto</p>
+      </div>
+
+      <div class="gallery">
+        <figure class="shot shot--w2 shot--tall reveal" data-look="soft-glam">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">01</span><span class="ph__label">Soft glam</span><span class="ph__file">assets/foto/plat-01.jpg</span></div></div>
+          <figcaption><span class="shot__no">01</span><span class="shot__txt">Soft glam, resepsi malam</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide reveal" data-look="soft-glam" style="--i:1">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">02</span><span class="ph__label">Soft glam</span><span class="ph__file">assets/foto/plat-02.jpg</span></div></div>
+          <figcaption><span class="shot__no">02</span><span class="shot__txt">Soft glam, kulit lembap</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide shot--drop reveal" data-look="natural" style="--i:2">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">03</span><span class="ph__label">Natural</span><span class="ph__file">assets/foto/plat-03.jpg</span></div></div>
+          <figcaption><span class="shot__no">03</span><span class="shot__txt">Natural, akad pagi</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="adat" style="--i:3">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">04</span><span class="ph__label">Adat</span><span class="ph__file">assets/foto/plat-04.jpg</span></div></div>
+          <figcaption><span class="shot__no">04</span><span class="shot__txt">Adat, aksen emas</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="photoshoot">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">05</span><span class="ph__label">Photoshoot</span><span class="ph__file">assets/foto/plat-05.jpg</span></div></div>
+          <figcaption><span class="shot__no">05</span><span class="shot__txt">Photoshoot, lampu studio</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="natural" style="--i:1">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">06</span><span class="ph__label">Natural</span><span class="ph__file">assets/foto/plat-06.jpg</span></div></div>
+          <figcaption><span class="shot__no">06</span><span class="shot__txt">Natural, cahaya matahari</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="anak" style="--i:2">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">07</span><span class="ph__label">Kids makeup</span><span class="ph__file">assets/foto/plat-07.jpg</span></div></div>
+          <figcaption><span class="shot__no">07</span><span class="shot__txt">Kids makeup, pentas sekolah</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w4 shot--wide reveal" data-look="soft-glam">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">08</span><span class="ph__label">Soft glam</span><span class="ph__file">assets/foto/plat-08.jpg</span></div></div>
+          <figcaption><span class="shot__no">08</span><span class="shot__txt">Soft glam, acara siang</span></figcaption>
+        </figure>
+
+        <figure class="shot shot--w2 shot--tall reveal" data-look="proses" style="--i:1">
+          <div class="shot__frame"><div class="ph"><span class="ph__no">09</span><span class="ph__label">Di balik layar</span><span class="ph__file">assets/foto/plat-09.jpg</span></div></div>
+          <figcaption><span class="shot__no">09</span><span class="shot__txt">Persiapan alat sebelum mulai</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="outcome" id="gallery-empty" data-state="empty" hidden style="margin-top:2.5rem;max-width:40rem;">
+        <p class="outcome__title">Belum ada foto di kategori ini</p>
+        <p class="outcome__text">Arsip untuk gaya riasan ini belum diunggah. Pilih kategori lain, atau tanyakan langsung dan kami kirimkan contohnya lewat WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="tutup-h">
+    <span class="ghost-no ghost-no--bl" aria-hidden="true">04</span>
+    <div class="wrap closer reveal">
+      <div>
+        <h2 class="display display--sm" id="tutup-h">Ada plat yang mendekati keinginan Anda?</h2>
+        <p class="lede" style="margin-top:1.5rem;">Sebut nomornya saat menghubungi kami. Jauh lebih cepat daripada menjelaskan riasan dengan kata-kata.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--gold" href="kontak.html#booking">Kirim nomor plat dan tanggal</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span class="ghost-no ghost-no--bl" aria-hidden="true">DH</span>
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <p class="foot__name">DH Makeup Studio</p>
+        <p class="foot__line">Soft glam, natural look, dan kids makeup. Berbasis di Bandung, Subang, dan Cimahi, rutin ke Jakarta, bisa diajak ke luar kota.</p>
+      </div>
+      <div>
+        <h2>Halaman</h2>
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="layanan.html">Layanan</a></li>
+          <li><a href="paket.html">Paket dan harga</a></li>
+          <li><a href="tentang.html">Tentang</a></li>
+          <li><a href="ulasan.html">Ulasan</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Hubungi</h2>
+        <ul>
+          <li>WhatsApp <span class="pending">[NOMOR WHATSAPP]</span></li>
+          <li>Instagram <span class="pending">[USERNAME IG]</span></li>
+          <li>Email <span class="pending">[ALAMAT EMAIL]</span></li>
+          <li>Bandung, Subang, Cimahi, Jakarta</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>&copy; 2026 DH Makeup Studio</span>
+      <span>Kontak masih kosong, isi sebelum situs dipublikasikan</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

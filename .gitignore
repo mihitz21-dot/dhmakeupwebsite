@@ -1,7 +1,22 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+*.local
+
+# kredensial, tidak pernah masuk repo
+.git-credentials
+dh-credentials
+
+# keluaran verifikasi
+tools/verify/out/
+
+# dari template GitHub (remote)
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -32,10 +47,6 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
-
-# vercel
-.vercel
 
 # typescript
 *.tsbuildinfo
