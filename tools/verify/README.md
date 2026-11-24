@@ -49,12 +49,12 @@ membuatnya merah.
 
 ## uji_pantau.mjs
 
-    node tools/verify/uji_pantau.mjs src/scripts/admin.js
+    node tools/verify/uji_pantau.mjs src/scripts/admin-umum.js
 
 Berdiri sendiri: menyalakan server HTTP-nya sendiri di port acak dan menyajikan
 halaman ujinya dari memori, jadi tidak ada folder uji yang perlu disiapkan.
 
-Menguji dua fungsi pemantauan build di `src/scripts/admin.js`, kodenya diambil
+Menguji dua fungsi pemantauan build di `src/scripts/admin-umum.js`, kodenya diambil
 dari berkasnya dengan regex supaya uji ini ikut berubah kalau berkasnya
 disunting: `ambilPenanda()` terhadap server HTTP sungguhan, dan `tayang()` yang
 membandingkan waktu build dengan waktu penyimpanan.

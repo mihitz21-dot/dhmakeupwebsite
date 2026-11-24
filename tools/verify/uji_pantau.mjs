@@ -1,6 +1,6 @@
-// Uji logika pemantauan build di src/scripts/admin.js.
+// Uji logika pemantauan build di src/scripts/admin-umum.js.
 //
-//   node tools/verify/uji_pantau.mjs src/scripts/admin.js
+//   node tools/verify/uji_pantau.mjs src/scripts/admin-umum.js
 //
 // Berdiri sendiri: menyalakan server HTTP-nya sendiri di port acak dan
 // menyajikan halaman ujinya dari memori. Versi sebelumnya menuntut folder uji
@@ -12,16 +12,16 @@
 import { readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 
-const berkas = process.argv[2] || 'src/scripts/admin.js';
+const berkas = process.argv[2] || 'src/scripts/admin-umum.js';
 const src = readFileSync(berkas, 'utf8');
 
-const mT = src.match(/function tayang\(dibangun, diperbarui\) \{[\s\S]*?\n\}/);
+const mT = src.match(/(?:export )?(function tayang\(dibangun, diperbarui\) \{[\s\S]*?\n\})/);
 if (!mT) { console.log('GAGAL: fungsi tayang tidak ditemukan di ' + berkas); process.exit(1); }
-const mP = src.match(/async function ambilPenanda\(situs\) \{[\s\S]*?\n\}/);
+const mP = src.match(/(?:export )?(async function ambilPenanda\(situs\) \{[\s\S]*?\n\})/);
 if (!mP) { console.log('GAGAL: fungsi ambilPenanda tidak ditemukan di ' + berkas); process.exit(1); }
 
-const tayang = new Function(mT[0] + '; return tayang;')();
-const ambilPenanda = new Function(mP[0] + '; return ambilPenanda;')();
+const tayang = new Function(mT[1] + '; return tayang;')();
+const ambilPenanda = new Function(mP[1] + '; return ambilPenanda;')();
 
 const PENANDA = '2026-11-24T09:00:00.000Z';
 const halaman = (isi) => '<!DOCTYPE html><html><head>' + isi + '</head><body>uji</body></html>';
