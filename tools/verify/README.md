@@ -46,3 +46,20 @@ Tes ini MENGAMBIL kode dari `site.ts`, bukan menyalin ulang logikanya, jadi dia
 ikut berubah kalau berkas itu disunting. Sudah diuji mutasi: menghapus `trim()`,
 menghapus `.filter(Boolean)`, dan membalik kondisi `bersih()` ketiganya
 membuatnya merah.
+
+## uji_pantau.mjs
+
+    cd <folder uji> && python -m http.server 8731 --bind 127.0.0.1
+    node tools/verify/uji_pantau.mjs src/scripts/admin.js http://127.0.0.1:8731
+
+Folder uji butuh `ada/index.html` yang memuat
+`<meta name="dibangun" content="...">` dan `tanpa/index.html` yang tidak.
+
+Menguji dua fungsi pemantauan build di `src/scripts/admin.js`, kodenya
+diambil dari berkasnya dengan regex supaya uji ini ikut berubah kalau
+berkasnya disunting: `ambilPenanda()` terhadap server HTTP sungguhan, dan
+`tayang()` yang membandingkan waktu build dengan waktu penyimpanan.
+
+Yang paling penting di sini: build yang lebih TUA daripada waktu penyimpanan
+tidak boleh dianggap tayang. Penanda yang berubah hanya membuktikan ada build
+baru, bukan bahwa build itu membawa nilai yang baru disimpan.

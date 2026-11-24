@@ -140,9 +140,17 @@ async function simpan(e) {
   tulisKabar(hasil, 'empty', 'Menyimpan', '');
 
   let galat = null;
+  let diperbarui = null;
   try {
-    const res = await supabase.from('pengaturan').update(muatan).eq('id', 1);
+    // `diperbarui` diisi pemicu basis data setiap baris berubah. Nilainya
+    // diminta kembali karena pemantauan build butuh waktu penyimpanan dari
+    // jam server, bukan jam peramban: jam peramban bisa salah, dan kalau
+    // salah perbandingannya tidak bisa dipercaya sama sekali.
+    const res = await supabase
+      .from('pengaturan').update(muatan).eq('id', 1)
+      .select('diperbarui').single();
     galat = res.error;
+    diperbarui = res.data ? res.data.diperbarui : null;
   } catch (err) {
     galat = err;
   }
@@ -155,13 +163,102 @@ async function simpan(e) {
     return;
   }
 
+  // Tanpa waktu simpan dari server tidak ada yang bisa dibandingkan. Halaman
+  // ini TIDAK diam-diam jatuh ke "penandanya beda berarti sudah tayang",
+  // karena penanda yang beda belum membuktikan build itu membawa perubahan
+  // yang baru disimpan. Lebih baik mengaku tidak bisa memantau.
+  if (!diperbarui) {
+    hentikanPantau();
+    tulisKabar(hasil, 'ready', 'Tersimpan, tapi build tidak bisa dipantau',
+      'Perubahan sudah masuk basis data. Server tidak mengembalikan waktu ' +
+      'penyimpanan, jadi halaman ini tidak bisa memastikan build mana yang ' +
+      'membawa perubahanmu. Periksa tab Deployments di Vercel.');
+    return;
+  }
+
   tulisKabar(hasil, 'ready', 'Tersimpan',
     'Situs sedang dibangun ulang, sekitar dua menit.');
-  pantauBuild(hasil);
+  pantauBuild(hasil, diperbarui);
 }
 
-// Diisi di Task 6.
-function pantauBuild() {}
+// Satu pegangan timer untuk seluruh modul. Tanpa ini, menekan Simpan dua
+// kali membuat dua putaran berjalan sekaligus dan saling menimpa pesan di
+// layar. `sesiPantau` membatalkan putaran yang fetch-nya masih di udara saat
+// pemantauan dihentikan, karena clearTimeout tidak bisa menarik kembali
+// fetch yang sudah berjalan.
+let timerPantau = null;
+let sesiPantau = 0;
+
+function hentikanPantau() {
+  if (timerPantau !== null) clearTimeout(timerPantau);
+  timerPantau = null;
+  sesiPantau += 1;
+}
+
+// Penanda `dibangun` hanya membuktikan ada build BARU yang sedang disajikan,
+// bukan bahwa build itu membawa nilai yang baru disimpan: sebuah build yang
+// sudah berjalan bisa saja membaca basis data sesaat SEBELUM penyimpanan,
+// jadi penandanya berubah sementara isinya masih nilai lama. Karena itu yang
+// dibandingkan adalah waktu, bukan beda-tidak-beda. Sebuah build dianggap
+// membawa perubahan hanya kalau ia dibangun SESUDAH baris itu diperbarui.
+function tayang(dibangun, diperbarui) {
+  if (!dibangun || !diperbarui) return false;
+  const b = new Date(dibangun).getTime();
+  const d = new Date(diperbarui).getTime();
+  if (Number.isNaN(b) || Number.isNaN(d)) return false;
+  return b > d;
+}
+
+async function ambilPenanda(situs) {
+  try {
+    const r = await fetch(situs + '/?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return null;
+    const teks = await r.text();
+    const m = teks.match(/name="dibangun" content="([^"]+)"/);
+    return m ? m[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+function pantauBuild(hasil, diperbarui) {
+  hentikanPantau();
+  const sesi = sesiPantau;
+  const situs = location.origin;
+  const mulaiPantau = Date.now();
+  const batas = 5 * 60 * 1000;
+  const selang = 10000;
+
+  // setInterval dengan callback async bisa menumpuk: kalau satu fetch lebih
+  // lama dari selangnya, selang berikutnya tetap tiba dan panggilannya
+  // bertumpuk. Putaran ini menjadwalkan dirinya sendiri sesudah fetch
+  // selesai, jadi tidak pernah ada dua pengambilan sekaligus.
+  const putaran = async () => {
+    const kini = await ambilPenanda(situs);
+    if (sesi !== sesiPantau) return;
+
+    if (tayang(kini, diperbarui)) {
+      timerPantau = null;
+      tulisKabar(hasil, 'ready', 'Sudah tayang',
+        'Situs selesai dibangun ulang pada ' + kini + '.');
+      return;
+    }
+
+    // Batas lima menit disengaja: tanpa itu halaman menengok selamanya kalau
+    // build gagal, dan pemilik situs tidak pernah diberi tahu apa pun.
+    if (Date.now() - mulaiPantau > batas) {
+      timerPantau = null;
+      tulisKabar(hasil, 'ready', 'Tersimpan, tapi build belum terdeteksi',
+        'Perubahan sudah masuk basis data dan tidak hilang. Yang belum ' +
+        'terdeteksi hanya build ulangnya. Periksa tab Deployments di Vercel.');
+      return;
+    }
+
+    timerPantau = setTimeout(putaran, selang);
+  };
+
+  timerPantau = setTimeout(putaran, selang);
+}
 
 async function mulai() {
   keadaan('memuat');
@@ -214,6 +311,9 @@ el('adm-login').addEventListener('submit', async (e) => {
 });
 
 el('adm-keluar').addEventListener('click', async () => {
+  // Pemantau yang dibiarkan hidup akan terus menengok situs dan menulis
+  // pesan ke panel sesudah sesinya berakhir.
+  hentikanPantau();
   await supabase.auth.signOut();
   keadaan('login');
 });
