@@ -1,5 +1,7 @@
 # DH Makeup Studio
 
+Situs hidup: https://dhmakeupwebsite.vercel.app
+
 Situs DH Makeup Studio. Astro, keluaran statis, terbit lewat Vercel.
 
 ## Menjalankan
