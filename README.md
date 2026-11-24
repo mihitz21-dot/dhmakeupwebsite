@@ -26,7 +26,7 @@ memperbarui seluruh tempat yang memakainya.
 
 ## Mengisi foto
 
-Lihat `public/foto/LETAKKAN-FOTO-DI-SINI.txt`.
+Lihat `public/assets/foto/LETAKKAN-FOTO-DI-SINI.txt`.
 
 ## Verifikasi
 
