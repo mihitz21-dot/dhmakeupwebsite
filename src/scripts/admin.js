@@ -15,6 +15,47 @@ function keadaan(nama) {
   tampil('adm-panel', nama === 'panel');
 }
 
+// Menu tab panel admin. Urutannya sama dengan urutan tombol di admin.astro,
+// dan tiap nama di sini dipakai dua kali: id tombolnya `tab-<nama>` dan id
+// wadah isinya `panel-<nama>`.
+const TAB = ['pengaturan', 'beranda', 'acara', 'portofolio', 'tentang'];
+
+// Hanya isi tab aktif yang terlihat. tabindex diputar supaya satu baris tab
+// menjadi satu perhentian Tab, bukan lima, sesuai pola tab ARIA: masuk dengan
+// Tab, pindah dengan panah.
+function pilihTab(nama, fokus) {
+  TAB.forEach((n) => {
+    const aktif = n === nama;
+    const tombol = el('tab-' + n);
+    tombol.setAttribute('aria-selected', aktif ? 'true' : 'false');
+    tombol.tabIndex = aktif ? 0 : -1;
+    el('panel-' + n).hidden = !aktif;
+  });
+  if (fokus) el('tab-' + nama).focus();
+}
+
+function siapkanTab() {
+  TAB.forEach((nama, i) => {
+    const tombol = el('tab-' + nama);
+    tombol.addEventListener('click', () => pilihTab(nama, false));
+    tombol.addEventListener('keydown', (e) => {
+      let tujuan = -1;
+      if (e.key === 'ArrowRight') tujuan = (i + 1) % TAB.length;
+      else if (e.key === 'ArrowLeft') tujuan = (i - 1 + TAB.length) % TAB.length;
+      else if (e.key === 'Home') tujuan = 0;
+      else if (e.key === 'End') tujuan = TAB.length - 1;
+      if (tujuan < 0) return;
+      // Panah kiri dan kanan di dalam baris tab tidak boleh ikut menggulung
+      // halaman atau memindahkan kursor teks.
+      e.preventDefault();
+      pilihTab(TAB[tujuan], true);
+    });
+  });
+  // Keadaan awal ditegaskan dari JavaScript, bukan dipercayakan ke markup,
+  // supaya markup dan logika tidak bisa berbeda diam-diam.
+  pilihTab('pengaturan', false);
+}
+
 // Enam kolom bertipe text. Kolom area ditangani terpisah karena tipenya
 // text[] di basis data, jadi formulir ini punya tujuh kolom: enam di sini
 // ditambah satu kolom area.
@@ -201,4 +242,5 @@ el('adm-keluar').addEventListener('click', async () => {
   keadaan('login');
 });
 
+siapkanTab();
 mulai();

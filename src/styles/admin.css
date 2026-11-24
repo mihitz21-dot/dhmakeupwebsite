@@ -27,10 +27,6 @@ input[type="password"]:focus { border-color: var(--rose); }
 /* Bagian foto. Bingkai pratinjau 72x90 mengikuti perbandingan 4:5 yang
    dipakai bingkai foto di situs, jadi yang terlihat di admin sama bentuknya
    dengan yang nanti tayang. */
-.adm-judul-foto { margin-top: var(--s-4); }
-.adm-grup { margin-bottom: var(--s-3); }
-.adm-grup > h3 { font-size: 0.8rem; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--ink-soft); margin-bottom: var(--s-2); }
 .adm-foto-baris { display: grid; grid-template-columns: 72px 1fr;
   gap: var(--s-2); align-items: start; padding: var(--s-2) 0;
   border-top: 1px solid var(--rule); }
@@ -42,3 +38,34 @@ input[type="password"]:focus { border-color: var(--rose); }
 .adm-foto-aksi { display: flex; flex-wrap: wrap; gap: var(--s-2);
   align-items: center; margin-top: var(--s-2); }
 .adm-foto-aksi input[type="file"] { font: inherit; font-size: 0.85rem; }
+
+/* Menu tab. Lima tab sejajar di satu baris. Di lebar ponsel barisnya
+   menggulung sendiri ke samping, jadi halaman di belakangnya tidak pernah
+   bisa digeser. scroll-padding menyisakan ruang supaya cincin fokus tombol
+   pertama dan terakhir tidak terpotong tepi baris. */
+.adm-tablist {
+  display: flex; gap: var(--s-1);
+  margin: var(--s-3) 0 0;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto; scroll-padding-inline: 3px;
+  -webkit-overflow-scrolling: touch;
+}
+.adm-tab {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0.7rem 1.1rem;
+  background: transparent; border: 0; border-bottom: 2px solid transparent;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  font: inherit; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+  transition: color var(--t), border-color var(--t), background var(--t);
+}
+.adm-tab:hover { color: var(--ink); background: var(--blush-pale); }
+/* Tab aktif ditandai dua hal sekaligus, warna DAN garis bawah, supaya yang
+   tidak bisa membedakan warna tetap melihat tab mana yang terbuka. */
+.adm-tab[aria-selected="true"] {
+  color: var(--rose-darker); border-bottom-color: var(--rose);
+  background: var(--paper);
+}
+.adm-tabpanel { margin-top: var(--s-3); }

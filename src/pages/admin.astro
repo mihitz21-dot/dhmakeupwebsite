@@ -39,10 +39,38 @@ import '../styles/admin.css';
   <section id="adm-panel" class="adm-panel" hidden>
     <p class="fine">Masuk sebagai <span id="adm-siapa"></span>.
       <button class="btn btn--quiet" type="button" id="adm-keluar">Keluar</button></p>
-    <div id="adm-isi"></div>
 
-    <h2 class="h3 adm-judul-foto">Foto</h2>
-    <div id="adm-foto"></div>
+    <!-- Nama tab di sini dipasangkan dengan wadah foto di admin-foto.js lewat
+         id wadahnya: panel-beranda memuat #adm-foto-beranda, dan seterusnya.
+         Menambah kelompok foto berarti menambah tab di sini juga. -->
+    <div class="adm-tablist" role="tablist" aria-label="Bagian admin">
+      <button class="adm-tab" type="button" role="tab" id="tab-pengaturan"
+        aria-controls="panel-pengaturan" aria-selected="true" tabindex="0">Pengaturan</button>
+      <button class="adm-tab" type="button" role="tab" id="tab-beranda"
+        aria-controls="panel-beranda" aria-selected="false" tabindex="-1">Beranda</button>
+      <button class="adm-tab" type="button" role="tab" id="tab-acara"
+        aria-controls="panel-acara" aria-selected="false" tabindex="-1">Kategori acara</button>
+      <button class="adm-tab" type="button" role="tab" id="tab-portofolio"
+        aria-controls="panel-portofolio" aria-selected="false" tabindex="-1">Portofolio</button>
+      <button class="adm-tab" type="button" role="tab" id="tab-tentang"
+        aria-controls="panel-tentang" aria-selected="false" tabindex="-1">Tentang</button>
+    </div>
+
+    <div class="adm-tabpanel" role="tabpanel" id="panel-pengaturan" aria-labelledby="tab-pengaturan">
+      <div id="adm-isi"></div>
+    </div>
+    <div class="adm-tabpanel" role="tabpanel" id="panel-beranda" aria-labelledby="tab-beranda" hidden>
+      <div id="adm-foto-beranda"></div>
+    </div>
+    <div class="adm-tabpanel" role="tabpanel" id="panel-acara" aria-labelledby="tab-acara" hidden>
+      <div id="adm-foto-acara"></div>
+    </div>
+    <div class="adm-tabpanel" role="tabpanel" id="panel-portofolio" aria-labelledby="tab-portofolio" hidden>
+      <div id="adm-foto-portofolio"></div>
+    </div>
+    <div class="adm-tabpanel" role="tabpanel" id="panel-tentang" aria-labelledby="tab-tentang" hidden>
+      <div id="adm-foto-tentang"></div>
+    </div>
   </section>
 </main>
 <script>import '../scripts/admin.js';</script>

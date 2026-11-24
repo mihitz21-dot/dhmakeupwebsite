@@ -5,22 +5,25 @@ import {
 import { kecilkan } from './kecilkan.js';
 
 // Nama posisi dalam bahasa manusia. Urutannya menentukan urutan tampil.
+// Unsur pertama tiap kelompok adalah id wadahnya di admin.astro: tiap
+// kelompok digambar ke wadahnya sendiri, satu per tab, bukan semuanya ke satu
+// wadah. Label tab yang dilihat pemilik situs ditulis di admin.astro.
 const GRUP = [
-  ['Beranda', [
+  ['adm-foto-beranda', [
     ['hero', 'Foto utama'],
     ['beranda-01', 'Pilihan 01, Rias pengantin'],
     ['beranda-02', 'Pilihan 02, Lamaran'],
     ['beranda-03', 'Pilihan 03, Natural'],
     ['beranda-04', 'Pilihan 04, Kids makeup'],
   ]],
-  ['Kategori acara', [
+  ['adm-foto-acara', [
     ['acara-01', 'Wedding'],
     ['acara-02', 'Lamaran'],
     ['acara-03', 'Pre-wedding'],
     ['acara-04', 'Wisuda'],
     ['acara-05', 'Photoshoot'],
   ]],
-  ['Portofolio', [
+  ['adm-foto-portofolio', [
     ['plat-01', 'Portofolio 01, Soft glam'],
     ['plat-02', 'Portofolio 02, Soft glam'],
     ['plat-03', 'Portofolio 03, Natural'],
@@ -31,7 +34,7 @@ const GRUP = [
     ['plat-08', 'Portofolio 08, Soft glam'],
     ['plat-09', 'Portofolio 09, Di balik layar'],
   ]],
-  ['Tentang', [
+  ['adm-foto-tentang', [
     ['perias', 'Foto perias'],
   ]],
 ];
@@ -101,7 +104,7 @@ function baris(slot, nama, data) {
 }
 
 export async function muatFoto() {
-  const wadah = el('adm-foto');
+  const wadah = GRUP.map(([id]) => el(id));
 
   // Seluruh baris dibangun ulang di sini, termasuk kotak kabarnya. Pemantau
   // yang masih hidup akan menulis ke kotak yang sudah dibuang dari halaman,
@@ -109,7 +112,9 @@ export async function muatFoto() {
   // dihentikan daripada dibiarkan menengok situs tanpa tempat bicara.
   hentikanPantau();
 
-  wadah.replaceChildren(buat('p', 'fine', 'Mengambil data foto...'));
+  wadah.forEach((w) => {
+    w.replaceChildren(buat('p', 'fine', 'Mengambil data foto...'));
+  });
 
   alamatBucket = import.meta.env.PUBLIC_SUPABASE_URL.replace(/\/+$/, '') +
     '/storage/v1/object/public/foto/';
@@ -120,25 +125,28 @@ export async function muatFoto() {
     if (r.error) throw r.error;
     data = r.data;
   } catch (e) {
-    wadah.replaceChildren();
-    const k = buat('div', 'outcome');
-    k.setAttribute('data-state', 'error');
-    k.appendChild(buat('p', 'outcome__title', 'Gagal mengambil data foto'));
-    k.appendChild(buat('p', 'outcome__text', terjemah(e.message || String(e))));
-    wadah.appendChild(k);
+    // Kabar galat ditulis ke SETIAP wadah, bukan ke satu wadah saja. Isi tab
+    // yang tidak aktif tersembunyi, jadi kabar yang hanya ditulis di satu tab
+    // akan membuat empat tab lain tampak kosong tanpa sebab.
+    const sebab = terjemah(e.message || String(e));
+    wadah.forEach((w) => {
+      const k = buat('div', 'outcome');
+      k.setAttribute('data-state', 'error');
+      k.appendChild(buat('p', 'outcome__title', 'Gagal mengambil data foto'));
+      k.appendChild(buat('p', 'outcome__text', sebab));
+      w.replaceChildren(k);
+    });
     return;
   }
 
   const peta = new Map(data.map((r) => [r.slot, r]));
-  wadah.replaceChildren();
-  for (const [judul, isi] of GRUP) {
-    const g = buat('div', 'adm-grup');
-    g.appendChild(buat('h3', null, judul));
+  GRUP.forEach(([, isi], i) => {
+    const w = wadah[i];
+    w.replaceChildren();
     for (const [slot, nama] of isi) {
-      g.appendChild(baris(slot, nama, peta.get(slot) || {}));
+      w.appendChild(baris(slot, nama, peta.get(slot) || {}));
     }
-    wadah.appendChild(g);
-  }
+  });
 }
 
 function kabar(slot, state, judul, teks) {
