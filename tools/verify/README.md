@@ -74,3 +74,55 @@ memuat kata "dibangun" sehingga hasilnya tetap `null` walau penjagaannya dihapus
 Diuji mutasi, lima cara merusak dan kelimanya membuat tes merah: membalik arah
 perbandingan, mengabaikan status HTTP, menghapus penjagaan nilai kosong,
 menyalahkan nama di regex penanda, dan membuat `tayang()` selalu true.
+
+## check_keamanan.py
+
+    set -a; . ./.env; set +a
+    python tools/verify/check_keamanan.py
+
+Butuh `.env` di akar repo berisi `PUBLIC_SUPABASE_URL` dan
+`PUBLIC_SUPABASE_ANON_KEY`. Keduanya memang dirancang publik dan ikut terkirim
+ke peramban; yang menjaga tabelnya adalah GRANT dan aturan akses baris, bukan
+kerahasiaan kunci anon.
+
+Membuktikan empat hal terhadap project Supabase sungguhan: update tanpa login
+ditolak, pendaftaran akun baru ditolak, lalu insert dan delete tanpa login
+ditolak.
+
+Yang paling penting di skrip ini adalah **kontrol positif** di baris pertama:
+`GET /rest/v1/pengaturan?id=eq.1&select=whatsapp` harus membalas HTTP 200. Baca
+publik memang diizinkan dengan sengaja, karena proses build perlu mengambil
+nilainya dan isinya tampil di situs publik. Kalau balasannya bukan 200, skrip
+BERHENTI saat itu juga dan tidak menjalankan keempat pembuktian penolakan.
+
+Tanpa penjagaan itu skrip ini adalah tes yang tidak bisa gagal. Kunci yang salah
+atau project yang dijeda membuat SEMUA permintaan ditolak, termasuk keempat yang
+memang diharap ditolak, sehingga skrip mencetak empat baris `OK` dan `0 masalah`
+tepat ketika ia sudah tidak menguji apa pun. Ini sudah diukur, bukan dugaan:
+salinan skrip dengan kontrol positif dihapus, dijalankan memakai kunci anon yang
+sengaja salah, mencetak `0 masalah` dan keluar dengan kode 0.
+
+Cek pendaftaran tidak cukup melihat kode HTTP >= 400. Supabase juga membalas 422
+untuk alasan lain, misalnya alamat email yang tidak sah, jadi skrip mewajibkan
+badan balasannya memuat `signup_disabled`.
+
+Diuji mutasi pada salinan di luar repo, tiga cara merusak dan ketiganya membuat
+hasilnya merah: membalik ambang penilaian (`kode < 400` jadi `kode >= 400`, jadi
+4 masalah), menyasarkan salah satu pembuktian ke jalur yang memang diizinkan
+sehingga cabang "DITERIMA" benar-benar dijalankan terhadap HTTP 200 sungguhan,
+dan menghapus kontrol positif seperti di paragraf atas.
+
+### Yang BELUM dibuktikan skrip ini
+
+Spec meminta insert dan delete ditolak **walau sudah login**, dibuktikan dengan
+sesi yang sah. Skrip ini memanggilnya memakai kunci anon, yaitu TANPA sesi, jadi
+klaimnya lebih lemah daripada yang diminta spec. Membuktikan varian "sudah
+login" butuh kata sandi akun pemilik situs, yang tidak ada di repo dan tidak
+boleh ada di repo. Karena itu keluarannya menyebut "insert tanpa login ditolak",
+bukan "insert ditolak", dan mencetak bagian BELUM TERUJI di akhir.
+
+Penalaran dari skema, bukan pengukuran: `authenticated` hanya diberi
+`grant select, update`, sehingga lapisan GRANT sudah menolak insert dan delete
+sebelum aturan akses baris diperiksa. Tidak adanya kebijakan insert dan delete
+adalah lapisan kedua. Pemilik situs tetap perlu memeriksanya sendiri dengan
+sesinya.
