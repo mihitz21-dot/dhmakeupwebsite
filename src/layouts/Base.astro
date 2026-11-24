@@ -4,6 +4,9 @@ import '../styles/tambahan.css';
 import Masthead from '../components/Masthead.astro';
 import NavSheet from '../components/NavSheet.astro';
 import Footer from '../components/Footer.astro';
+import { alamatKanonik } from '../lib/alamat';
+import { getSite } from '../data/site';
+import { getFoto } from '../data/foto';
 
 interface Props {
   judul: string;
@@ -12,6 +15,32 @@ interface Props {
 }
 const { judul, deskripsi, halaman } = Astro.props;
 const dibangun = new Date().toISOString();
+
+const site = await getSite();
+
+// Alamat kanonik halaman ini. Dihitung lewat src/lib/alamat.ts, modul yang
+// sama dengan yang dipakai sitemap.xml.ts, supaya keduanya tidak bisa berbeda.
+const kanonik = alamatKanonik(Astro.site, Astro.url.pathname);
+
+// Gambar pratinjau. Pemilik situs sering mengirim tautan lewat WhatsApp dan
+// Instagram, dan di sana og:image yang menentukan apakah tautannya terlihat
+// sebagai kartu atau sebagai teks telanjang.
+//
+// Selama slot `hero` belum punya berkas, dipakai kartu cadangan buatan sendiri
+// di /assets/og-bawaan.jpg (lihat tools/og-bawaan.html). Begitu pemilik situs
+// mengunggah foto utamanya lewat halaman admin, pratinjaunya langsung berganti
+// menjadi foto itu tanpa menyentuh kode.
+const hero = (await getFoto()).get('hero');
+const OG_BAWAAN = { jalur: '/assets/og-bawaan.jpg', lebar: 1200, tinggi: 630 };
+const ogJalur = hero?.berkas ? '/assets/foto/' + hero.berkas : OG_BAWAAN.jalur;
+const ogGambar = new URL(ogJalur, Astro.site).href;
+// Lebar dan tinggi hanya dicantumkan kalau benar-benar diketahui. Angka yang
+// salah lebih merugikan daripada angka yang tidak ada, karena WhatsApp dan
+// Facebook memakainya untuk memesan ruang kartu sebelum gambarnya selesai
+// diunduh. Kolom lebar/tinggi di tabel foto bisa null.
+const ogUkuran = hero?.berkas
+  ? (hero.lebar && hero.tinggi ? { lebar: hero.lebar, tinggi: hero.tinggi } : null)
+  : { lebar: OG_BAWAAN.lebar, tinggi: OG_BAWAAN.tinggi };
 ---
 <!DOCTYPE html>
 <html lang="id">
@@ -27,6 +56,22 @@ setTimeout(function(){if(!window.__revealReady)document.documentElement.classNam
 <title>{judul}</title>
 <meta name="description" content={deskripsi}>
 <meta name="dibangun" content={dibangun}>
+<link rel="canonical" href={kanonik}>
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={site.nama}>
+<meta property="og:title" content={judul}>
+<meta property="og:description" content={deskripsi}>
+<meta property="og:url" content={kanonik}>
+<meta property="og:image" content={ogGambar}>
+{ogUkuran && <meta property="og:image:width" content={String(ogUkuran.lebar)} />}
+{ogUkuran && <meta property="og:image:height" content={String(ogUkuran.tinggi)} />}
+<meta property="og:locale" content="id_ID">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={judul}>
+<meta name="twitter:description" content={deskripsi}>
+<meta name="twitter:image" content={ogGambar}>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">

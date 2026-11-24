@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kartu pratinjau bawaan DH Makeup Studio</title>
+<!--
+  Sumber gambar public/assets/og-bawaan.jpg, yaitu kartu pratinjau yang muncul
+  di WhatsApp, Instagram, Facebook, dan Twitter selama slot foto `hero` belum
+  berisi foto sungguhan.
+
+  Cara membuat ulang (dari akar repo):
+
+      python tools/og-bawaan.py
+
+  Skrip itu membuka berkas ini di Chromium lewat Playwright pada viewport
+  1200x630, lalu menyimpannya sebagai JPEG mutu 85 ke
+  public/assets/og-bawaan.jpg.
+
+  Warna dan font di bawah DISALIN dari src/styles/site.css (blok :root dan
+  pemakaian font-family di sana), bukan dikarang baru, supaya kartunya terasa
+  satu keluarga dengan situsnya. Kalau palet di site.css berubah, salin lagi
+  nilainya ke sini dan jalankan skripnya.
+
+  Nomor telepon sengaja tidak ada di gambar. Gambar ini tidak bisa diperbarui
+  dari halaman admin, sedangkan nomor WhatsApp bisa berubah kapan saja.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Disalin dari src/styles/site.css */
+  :root {
+    --ink:       #231C1A;
+    --ink-soft:  #5A514D;
+    --rose:      #8A4853;
+    --rose-deep: #6E343D;
+    --gold:      #C39A63;
+    --gold-soft: rgba(195, 154, 99, 0.42);
+    --canvas:    #F7F1EC;
+    --paper:     #FFFFFF;
+    --blush:     #EEDCD6;
+    --rule-soft: #E9DCD6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 1200px; height: 630px; }
+
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  /* Kartu kertas undangan, sama seperti band--paper di situsnya. */
+  .kartu {
+    position: relative;
+    width: 1128px;
+    height: 558px;
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    border-radius: 20px;
+    padding: 76px 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Lengkungan meja rias, dipotong di sudut kanan. Ornamen, bukan foto. */
+  .arch {
+    position: absolute;
+    right: -120px;
+    bottom: -170px;
+    width: 470px;
+    height: 620px;
+    background: var(--blush);
+    border-radius: 50% 50% 20px 20px / 38% 38% 20px 20px;
+    opacity: 0.85;
+  }
+  .arch--garis {
+    right: -74px;
+    bottom: -140px;
+    width: 470px;
+    height: 620px;
+    background: none;
+    border: 1px solid var(--gold-soft);
+    opacity: 1;
+  }
+
+  .isi { position: relative; max-width: 700px; }
+
+  .plat {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  .garis {
+    width: 62px;
+    height: 1px;
+    background: var(--gold);
+    margin: 22px 0 30px;
+  }
+
+  .nama {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 82px;
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .jenis {
+    font-family: "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-size: 31px;
+    line-height: 1.4;
+    color: var(--rose-deep);
+    margin-top: 26px;
+  }
+
+  .kota {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 34px;
+  }
+</style>
+</head>
+<body>
+  <div class="kartu">
+    <span class="arch" aria-hidden="true"></span>
+    <span class="arch arch--garis" aria-hidden="true"></span>
+    <div class="isi">
+      <p class="plat">Perias pengantin</p>
+      <span class="garis"></span>
+      <p class="nama">DH Makeup Studio</p>
+      <p class="jenis">Soft glam, natural look, dan kids makeup</p>
+      <p class="kota">Bandung &middot; Subang &middot; Cimahi &middot; Jakarta</p>
+    </div>
+  </div>
+</body>
+</html>

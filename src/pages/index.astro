@@ -3,7 +3,74 @@ import Base from '../layouts/Base.astro';
 import Plate from '../components/Plate.astro';
 import PhotoSlot from '../components/PhotoSlot.astro';
 import { getSite, rupiah } from '../data/site';
+import { getFoto } from '../data/foto';
+import { alamatKanonik } from '../lib/alamat';
 const site = await getSite();
+
+// ---------------------------------------------------------------- JSON-LD
+// Schema LocalBusiness hanya di beranda, bukan di tiap halaman. Satu entitas
+// bisnis cukup diumumkan satu kali, di halaman yang mewakili bisnisnya.
+//
+// Tipe yang dipakai: HealthAndBeautyBusiness, bukan BeautySalon. BeautySalon
+// menyatakan adanya salon yang bisa didatangi pelanggan, sedangkan perias ini
+// mendatangi lokasi klien dan tidak punya gerai. Keduanya sama-sama turunan
+// LocalBusiness, jadi mesin pencari memperlakukannya setara, tapi
+// HealthAndBeautyBusiness tidak mengklaim tempat yang tidak ada. Konsekuensinya
+// `address` memang tidak ada, dan cakupan wilayah dinyatakan lewat areaServed.
+//
+// Isinya diambil dari getSite() supaya ikut berubah begitu pemilik situs
+// menyunting pengaturannya, tanpa menyentuh berkas ini.
+const foto = await getFoto();
+const heroFoto = foto.get('hero');
+const gambarLd = new URL(
+  heroFoto?.berkas ? '/assets/foto/' + heroFoto.berkas : '/assets/og-bawaan.jpg',
+  Astro.site,
+).href;
+
+// Nomor WhatsApp disimpan dalam format lokal ("08...") karena itu yang ditulis
+// pemilik situs di halaman admin. Schema.org meminta nomor telepon yang bisa
+// dihubungi lintas negara, jadi di sini saja nomornya diubah ke bentuk +62.
+function keE164(nomor: string): string | null {
+  const angka = nomor.replace(/\D/g, '');
+  if (angka.length < 9) return null;
+  if (angka.startsWith('62')) return '+' + angka;
+  if (angka.startsWith('0')) return '+62' + angka.slice(1);
+  return '+' + angka;
+}
+
+const telepon = site.kontak.whatsapp ? keE164(site.kontak.whatsapp) : null;
+const instagram = site.kontak.instagram
+  ? 'https://instagram.com/' + site.kontak.instagram.replace(/^@/, '')
+  : null;
+
+// Objek dibangun dulu di JavaScript, lalu baru di-JSON.stringify. Tidak ada
+// perangkaian string JSON dengan tangan, supaya nilai apa pun dari basis data
+// tidak bisa menghasilkan JSON rusak.
+const ld: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  name: site.nama,
+  url: alamatKanonik(Astro.site, '/'),
+  image: gambarLd,
+  description:
+    'Perias pengantin dan makeup artist yang mendatangi lokasi klien. Soft glam, ' +
+    'natural look, dan kids makeup untuk wedding, lamaran, pre-wedding, wisuda, ' +
+    'dan photoshoot.',
+  areaServed: site.area.map((a) => ({ '@type': 'City', name: a })),
+};
+
+// Properti bernilai null TIDAK dimasukkan. Lebih baik propertinya tidak ada
+// daripada ada tapi kosong: "email": null atau "email": "" adalah data palsu
+// yang ikut dibaca mesin pencari. Email, jam balas, DP, dan pembatalan memang
+// masih kosong sekarang, jadi cabang ini benar-benar terpakai.
+if (telepon) ld.telephone = telepon;
+if (site.kontak.email) ld.email = site.kontak.email;
+if (instagram) ld.sameAs = [instagram];
+if (site.kontak.jamOperasional) ld.openingHours = site.kontak.jamOperasional;
+
+// "<" diloloskan supaya nilai yang memuat "</script>" tidak bisa menutup blok
+// skrip ini lebih awal dan menyuntikkan markup ke halaman.
+const ldJson = JSON.stringify(ld, null, 2).replace(/</g, '\\u003c');
 ---
 <Base
   judul="DH Makeup Studio | MUA Bandung, Subang, Cimahi, Jakarta"
@@ -201,5 +268,7 @@ const site = await getSite();
       </div>
     </div>
   </section>
+
+  <script type="application/ld+json" is:inline set:html={ldJson}></script>
 
 </Base>

@@ -1,0 +1,24 @@
+# robots.txt DH Makeup Studio
+# Ketujuh halaman publik boleh dirayapi semua mesin pencari.
+
+User-agent: *
+Allow: /
+
+# Halaman /admin SENGAJA tidak di-Disallow. Pembenarannya:
+#
+# Disallow dan noindex bekerja berbeda. Halaman yang di-Disallow tidak pernah
+# diunduh, jadi <meta name="robots" content="noindex"> di dalamnya tidak pernah
+# terbaca. Google masih bisa mencantumkan alamat seperti itu di hasil pencarian
+# tanpa isi, hanya alamatnya, kalau menemukan tautan ke sana dari tempat lain.
+# Disallow karena itu TIDAK menjamin halaman hilang dari hasil pencarian,
+# sedangkan noindex menjamin, asalkan halamannya boleh diunduh dulu.
+#
+# Karena yang diminta adalah "admin tidak boleh muncul di hasil pencarian",
+# pilihan yang benar adalah membiarkan /admin dirayapi supaya noindex-nya
+# terbaca dan dipatuhi. Halaman itu juga hanya berisi formulir login, tidak ada
+# isi rahasia yang perlu disembunyikan dari perayap, dan tidak ada satu pun
+# tautan ke sana dari halaman publik.
+#
+# /admin juga tidak dicantumkan di sitemap.xml.
+
+Sitemap: https://dhmakeupwebsite.vercel.app/sitemap.xml
