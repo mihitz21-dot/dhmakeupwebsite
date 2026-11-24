@@ -132,15 +132,34 @@ def main():
                   f"foto/{berkas[0]} dengan kunci anon berhasil "
                   f"(HTTP {kode_unduh})")
         else:
-            print("DILEWATI kontrol positif 2: bucket foto masih KOSONG, jadi "
-                  "tidak ada")
-            print("         berkas yang bisa diunduh, dan endpoint metadata "
-                  "bucket menolak")
-            print("         kunci anon. Yang terukur hanya bahwa layanan "
-                  "storage menjawab")
-            print("         HTTP 200 untuk kunci anon. Itu bukti LEMAH: daftar "
-                  "isi bucket")
-            print("         bernama salah pun menjawab 200 dan '[]'.")
+            # Bucket masih kosong, jadi tidak ada berkas untuk diunduh. Tapi
+            # keberadaan bucket TETAP bisa diukur, dengan membandingkan badan
+            # balasan untuk bucket ini dengan bucket yang namanya dikarang.
+            # Kode HTTP-nya sama-sama 400 dan tidak bisa membedakan; yang
+            # membedakan hanya badan balasannya:
+            #   bucket ADA  -> "Object not found", kode NoSuchKey
+            #   bucket TIDAK -> "Bucket not found", kode NoSuchBucket
+            _, isi_ada = panggil("GET", "/storage/v1/object/public/foto/"
+                                        "berkas-yang-pasti-tidak-ada.jpg")
+            _, isi_palsu = panggil("GET", "/storage/v1/object/public/"
+                                          "bucket-yang-pasti-tidak-ada/x.jpg")
+            if "NoSuchBucket" in isi_ada:
+                return berhenti(
+                    "kontrol positif 2: bucket foto TIDAK ADA. Layanan storage "
+                    "menjawab NoSuchBucket untuk bucket ini, sama seperti untuk "
+                    "bucket yang namanya dikarang", 0, isi_ada)
+            if "NoSuchBucket" not in isi_palsu:
+                return berhenti(
+                    "kontrol positif 2: bucket karangan TIDAK menjawab "
+                    "NoSuchBucket, jadi pembedaan ini tidak bisa dipakai dan "
+                    "keberadaan bucket tidak terbukti", 0, isi_palsu)
+            penuh = True
+            print("OK  kontrol positif 2: bucket foto ADA (balasannya "
+                  "'Object not found',")
+            print("    berbeda dari bucket karangan yang menjawab "
+                  "'Bucket not found')")
+            print("--  bucket masih kosong, jadi baca publik atas berkas "
+                  "sungguhan belum terukur")
 
     gagal = []
 
