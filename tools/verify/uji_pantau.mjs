@@ -11,6 +11,8 @@
 // supaya uji ini ikut berubah kalau berkas itu disunting.
 import { readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const berkas = process.argv[2] || 'src/scripts/admin-umum.js';
 const src = readFileSync(berkas, 'utf8');
@@ -79,6 +81,52 @@ cek('timestamptz gaya Postgres dibaca benar',
     tayang('2026-11-24T10:00:00.500000+00:00', '2026-11-24T10:00:00.123456+00:00'), true);
 cek('beda zona waktu dibandingkan sebagai saat yang sama',
     tayang('2026-11-24T17:00:01+07:00', '2026-11-24T10:00:00Z'), true);
+
+// Halaman ini hanya punya SATU pemantau, karena timer dan nomor sesinya
+// dipegang bersama satu modul. Mengunggah foto kedua, atau menyimpan
+// pengaturan sambil foto masih dipantau, memindahkan pemantau itu. Tanpa
+// pesan pelepasan, kotak yang tadi dipantau berhenti selamanya di
+// "Tersimpan" dan pemilik situs akan menyangka penyimpanannya gagal.
+// Modulnya diimpor apa adanya, bukan disalin, jadi uji ini ikut berubah
+// kalau berkasnya disunting.
+console.log('pantauBuild() saat pemantauannya berpindah tempat:');
+
+const simpul = (tag) => ({
+  tag, className: '', textContent: '', attr: {}, anak: [],
+  setAttribute(k, v) { this.attr[k] = v; },
+  appendChild(n) { this.anak.push(n); return n; },
+});
+const ambilTeks = (n, kelas) => {
+  const p = n.anak.find((x) => x.className === kelas);
+  return p ? p.textContent : '';
+};
+const judul = (n) => ambilTeks(n, 'outcome__title');
+const isi = (n) => ambilTeks(n, 'outcome__text');
+
+globalThis.document = { createElement: (tag) => simpul(tag) };
+globalThis.location = { origin: asal + '/tanpa' };
+
+const umum = await import(pathToFileURL(resolve(berkas)).href);
+
+const a = simpul('div');
+const b = simpul('div');
+umum.pantauBuild(a, '2026-11-24T10:00:00Z');
+cek('kotak yang baru dipantau belum ditulisi apa pun', judul(a), '');
+
+umum.pantauBuild(b, '2026-11-24T10:00:01Z');
+cek('kotak lama diberi pesan pelepasan', judul(a), 'Tersimpan, pemantauannya dilepas');
+cek('pesan pelepasan menyebut datanya aman', /sudah masuk basis data/.test(isi(a)), true);
+cek('kotak yang sekarang dipantau tidak ikut ditulisi', judul(b), '');
+
+umum.pantauBuild(b, '2026-11-24T10:00:02Z');
+cek('memantau ulang kotak yang sama tidak menuduhnya dilepas', judul(b), '');
+
+umum.hentikanPantau();
+umum.pantauBuild(simpul('div'), '2026-11-24T10:00:03Z');
+cek('sesudah hentikanPantau tidak ada kotak lama yang dituju', judul(b), '');
+
+// Timer 10 detik yang menggantung menahan Node tetap hidup.
+umum.hentikanPantau();
 
 server.close();
 console.log(gagal === 0 ? 'SEMUA LULUS' : `${gagal} GAGAL`);

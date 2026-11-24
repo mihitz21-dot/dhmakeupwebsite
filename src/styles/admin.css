@@ -23,3 +23,22 @@ input[type="password"]:focus { border-color: var(--rose); }
 @media (min-width: 46rem) { .adm-baris { grid-template-columns: 1fr 1fr; } }
 .adm-bar { position: sticky; bottom: 0; background: var(--canvas);
   border-top: 1px solid var(--rule); padding: var(--s-2) 0; margin-top: var(--s-3); }
+
+/* Bagian foto. Bingkai pratinjau 72x90 mengikuti perbandingan 4:5 yang
+   dipakai bingkai foto di situs, jadi yang terlihat di admin sama bentuknya
+   dengan yang nanti tayang. */
+.adm-judul-foto { margin-top: var(--s-4); }
+.adm-grup { margin-bottom: var(--s-3); }
+.adm-grup > h3 { font-size: 0.8rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft); margin-bottom: var(--s-2); }
+.adm-foto-baris { display: grid; grid-template-columns: 72px 1fr;
+  gap: var(--s-2); align-items: start; padding: var(--s-2) 0;
+  border-top: 1px solid var(--rule); }
+.adm-foto-baris img { width: 72px; height: 90px; object-fit: cover;
+  border-radius: var(--r); display: block; }
+.adm-foto-kosong { width: 72px; height: 90px; border: 1px dashed var(--rule);
+  border-radius: var(--r); display: grid; place-items: center;
+  font-size: 0.7rem; color: var(--ink-soft); text-align: center; }
+.adm-foto-aksi { display: flex; flex-wrap: wrap; gap: var(--s-2);
+  align-items: center; margin-top: var(--s-2); }
+.adm-foto-aksi input[type="file"] { font: inherit; font-size: 0.85rem; }

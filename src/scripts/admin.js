@@ -3,6 +3,7 @@ import {
   terjemah, tulisKabar, kabarPenuh,
   pantauBuild, hentikanPantau,
 } from './admin-umum.js';
+import { muatFoto } from './admin-foto.js';
 
 const el = (id) => document.getElementById(id);
 
@@ -154,6 +155,7 @@ async function mulai() {
       el('adm-siapa').textContent = data.session.user.email;
       keadaan('panel');
       await muatPengaturan();
+      await muatFoto();
       return;
     }
     keadaan('login');
@@ -188,6 +190,7 @@ el('adm-login').addEventListener('submit', async (e) => {
   el('adm-siapa').textContent = data.user.email;
   keadaan('panel');
   await muatPengaturan();
+  await muatFoto();
 });
 
 el('adm-keluar').addEventListener('click', async () => {

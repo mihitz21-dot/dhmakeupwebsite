@@ -51,10 +51,16 @@ export function kabarPenuh(wadah, state, judul, teks) {
 // fetch yang sudah berjalan.
 let timerPantau = null;
 let sesiPantau = 0;
+// Kotak kabar yang sedang dipantau, supaya pemantau berikutnya bisa
+// memberitahu kotak ini bahwa pemantauannya dilepas. Tanpa itu kotak lama
+// berhenti selamanya di "Tersimpan" dan pemilik situs akan menyangka
+// penyimpanannya gagal, padahal yang berhenti cuma pemantauannya.
+let wadahPantau = null;
 
 export function hentikanPantau() {
   if (timerPantau !== null) clearTimeout(timerPantau);
   timerPantau = null;
+  wadahPantau = null;
   sesiPantau += 1;
 }
 
@@ -85,7 +91,19 @@ export async function ambilPenanda(situs) {
 }
 
 export function pantauBuild(hasil, diperbarui) {
+  // Mengunggah foto kedua, atau menyimpan pengaturan sambil foto masih
+  // dipantau, memindahkan satu-satunya pemantau ke tempat yang baru. Yang
+  // lama diberi pesan jujur dulu: datanya aman, dan build yang sekarang
+  // dipantau juga membawa perubahan ini karena ia dibangun sesudahnya.
+  const sebelumnya = wadahPantau;
   hentikanPantau();
+  if (sebelumnya && sebelumnya !== hasil) {
+    tulisKabar(sebelumnya, 'ready', 'Tersimpan, pemantauannya dilepas',
+      'Perubahan ini sudah masuk basis data dan tidak hilang. Halaman ini ' +
+      'memantau satu build sekaligus, dan sekarang yang dipantau adalah ' +
+      'perubahan terbaru. Build itu membawa perubahan ini juga.');
+  }
+  wadahPantau = hasil;
   const sesi = sesiPantau;
   const situs = location.origin;
   const mulaiPantau = Date.now();
@@ -102,6 +120,7 @@ export function pantauBuild(hasil, diperbarui) {
 
     if (tayang(kini, diperbarui)) {
       timerPantau = null;
+      wadahPantau = null;
       tulisKabar(hasil, 'ready', 'Sudah tayang',
         'Situs selesai dibangun ulang pada ' + kini + '.');
       return;
@@ -111,6 +130,7 @@ export function pantauBuild(hasil, diperbarui) {
     // build gagal, dan pemilik situs tidak pernah diberi tahu apa pun.
     if (Date.now() - mulaiPantau > batas) {
       timerPantau = null;
+      wadahPantau = null;
       tulisKabar(hasil, 'ready', 'Tersimpan, tapi build belum terdeteksi',
         'Perubahan sudah masuk basis data dan tidak hilang. Yang belum ' +
         'terdeteksi hanya build ulangnya. Periksa tab Deployments di Vercel.');
