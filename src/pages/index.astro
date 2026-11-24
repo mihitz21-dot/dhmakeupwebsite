@@ -36,7 +36,7 @@ const site = await getSite();
 
       <div class="hero__figure reveal" style="--i:2">
         <div class="arch">
-          <PhotoSlot no="01" label="Foto utama" file="assets/foto/hero.jpg" rasio="4:5" />
+          <PhotoSlot slot="hero" no="01" label="Foto utama" />
         </div>
         <p class="hero__caption">
           <span>Slot foto utama, rasio 4:5</span>
@@ -84,33 +84,34 @@ const site = await getSite();
       <Plate no="03" label="Jenis acara" class="reveal" />
       <h2 class="h2 reveal" id="acara-h">Acara yang biasa kami tangani</h2>
 
-      <!-- Lima plat kecil di daftar ini: acara-01.jpg sampai acara-05.jpg,
-           rasio 4:5. Tiap PhotoSlot di .occ__thumb belum punya file=. Untuk
-           memasang, tambahkan file="assets/foto/acara-0N.jpg", ada={true},
-           dan alt="..." (lihat public/assets/foto/LETAKKAN-FOTO-DI-SINI.txt). -->
+      <!-- Lima plat kecil di daftar ini memakai slot acara-01 sampai acara-05.
+           Fotonya diunggah lewat halaman admin, bukan ditulis di berkas ini:
+           PhotoSlot membaca kolom berkas, alt, lebar, dan tinggi dari tabel
+           foto saat build, dan menggambar placeholder selama berkas masih
+           kosong. -->
       <ul class="lineup reveal" style="margin-top:3rem;">
         <li><a href="/layanan#wedding">
-          <span class="occ__thumb"><PhotoSlot no="01" label="Wedding" varian="gelap" rasio="4:5" /></span>
+          <span class="occ__thumb"><PhotoSlot slot="acara-01" no="01" label="Wedding" varian="gelap" /></span>
           <span class="occ__name">Wedding</span>
           <span class="occ__note">Akad dan resepsi, termasuk hairdo atau penataan hijab dan touch up di lokasi.</span>
         </a></li>
         <li><a href="/layanan#lamaran">
-          <span class="occ__thumb"><PhotoSlot no="02" label="Lamaran" varian="gelap" rasio="4:5" /></span>
+          <span class="occ__thumb"><PhotoSlot slot="acara-02" no="02" label="Lamaran" varian="gelap" /></span>
           <span class="occ__name">Lamaran</span>
           <span class="occ__note">Riasan yang kuat di foto dekat, karena acara lamaran rata-rata ruangan kecil.</span>
         </a></li>
         <li><a href="/layanan#prewedding">
-          <span class="occ__thumb"><PhotoSlot no="03" label="Pre-wedding" varian="gelap" rasio="4:5" /></span>
+          <span class="occ__thumb"><PhotoSlot slot="acara-03" no="03" label="Pre-wedding" varian="gelap" /></span>
           <span class="occ__name">Pre-wedding</span>
           <span class="occ__note">Satu kali ganti gaya rambut sudah termasuk, menyesuaikan dua konsep foto.</span>
         </a></li>
         <li><a href="/layanan#wisuda">
-          <span class="occ__thumb"><PhotoSlot no="04" label="Wisuda" varian="gelap" rasio="4:5" /></span>
+          <span class="occ__thumb"><PhotoSlot slot="acara-04" no="04" label="Wisuda" varian="gelap" /></span>
           <span class="occ__name">Wisuda dan acara</span>
           <span class="occ__note">Datang pagi buta kalau perlu, karena jadwal wisuda jarang bersahabat.</span>
         </a></li>
         <li><a href="/layanan#photoshoot">
-          <span class="occ__thumb"><PhotoSlot no="05" label="Photoshoot" varian="gelap" rasio="4:5" /></span>
+          <span class="occ__thumb"><PhotoSlot slot="acara-05" no="05" label="Photoshoot" varian="gelap" /></span>
           <span class="occ__name">Photoshoot</span>
           <span class="occ__note">Disesuaikan dengan lampu studio atau cahaya matahari, dibicarakan dengan fotografernya.</span>
         </a></li>
@@ -134,25 +135,25 @@ const site = await getSite();
       <div class="gallery">
         <figure class="shot shot--w2 shot--tall reveal">
           <div class="shot__frame">
-            <PhotoSlot no="01" label="Rias pengantin" file="assets/foto/beranda-01.jpg" rasio="4:6" />
+            <PhotoSlot slot="beranda-01" no="01" label="Rias pengantin" />
           </div>
           <figcaption><span class="shot__no">01</span><span class="shot__txt">Rias pengantin, rasio 4:6</span></figcaption>
         </figure>
         <figure class="shot shot--w4 shot--wide reveal" style="--i:1">
           <div class="shot__frame">
-            <PhotoSlot no="02" label="Lamaran" file="assets/foto/beranda-02.jpg" rasio="16:12" />
+            <PhotoSlot slot="beranda-02" no="02" label="Lamaran" />
           </div>
           <figcaption><span class="shot__no">02</span><span class="shot__txt">Lamaran, rasio 16:12</span></figcaption>
         </figure>
         <figure class="shot shot--w4 shot--wide shot--drop reveal" style="--i:2">
           <div class="shot__frame">
-            <PhotoSlot no="03" label="Natural" file="assets/foto/beranda-03.jpg" rasio="16:12" />
+            <PhotoSlot slot="beranda-03" no="03" label="Natural" />
           </div>
           <figcaption><span class="shot__no">03</span><span class="shot__txt">Natural, rasio 16:12</span></figcaption>
         </figure>
         <figure class="shot shot--w2 shot--tall reveal" style="--i:3">
           <div class="shot__frame">
-            <PhotoSlot no="04" label="Kids makeup" file="assets/foto/beranda-04.jpg" rasio="4:6" />
+            <PhotoSlot slot="beranda-04" no="04" label="Kids makeup" />
           </div>
           <figcaption><span class="shot__no">04</span><span class="shot__txt">Kids makeup, rasio 4:6</span></figcaption>
         </figure>

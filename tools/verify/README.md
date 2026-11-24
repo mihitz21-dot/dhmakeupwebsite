@@ -75,6 +75,30 @@ Diuji mutasi, lima cara merusak dan kelimanya membuat tes merah: membalik arah
 perbandingan, mengabaikan status HTTP, menghapus penjagaan nilai kosong,
 menyalahkan nama di regex penanda, dan membuat `tayang()` selalu true.
 
+## uji_bingkai.mjs
+
+    node tools/verify/uji_bingkai.mjs src/data/foto.ts
+
+Menguji `bingkai()` di `src/data/foto.ts`, fungsi yang memilih satu dari tiga
+rasio bingkai berdasarkan lebar dan tinggi foto. Tabel `RASIO` dan isi
+fungsinya DIAMBIL dari berkasnya dengan regex, bukan disalin ulang, jadi uji
+ini ikut berubah kalau berkas itu disunting.
+
+Kasus bawaan yang paling penting: `lebar` atau `tinggi` null, dan `tinggi`
+nol. Seluruh dua puluh baris tabel `foto` masih kosong, jadi jalur itulah yang
+dipakai setiap kali build berjalan hari ini. Pembagian oleh nol di sana akan
+menghasilkan `Infinity` dan memilih rasio sembarang.
+
+Catatan soal foto persegi: `bingkai(1000, 1000)` menghasilkan `4:5`, bukan
+`16:12`. Rasio 1.0 berjarak 0.2000 dari 4:5 (0.8000), sedangkan jaraknya ke
+16:12 (1.3333) dan ke 4:6 (0.6667) sama-sama 0.3333. Angkanya diukur, bukan
+dikira.
+
+Diuji mutasi pada salinan di luar repo, tiga cara merusak dan ketiganya
+membuat uji ini merah: membalik arah perbandingan jarak (5 kasus gagal),
+menghapus penjagaan null dan tinggi nol (2 kasus gagal), dan membuat fungsinya
+selalu mengembalikan `'4:5'` (3 kasus gagal).
+
 ## check_keamanan.py
 
     set -a; . ./.env; set +a

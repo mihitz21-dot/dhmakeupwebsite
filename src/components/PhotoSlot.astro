@@ -1,22 +1,22 @@
 ---
+import { getFoto, bingkai } from '../data/foto';
+
 interface Props {
+  slot: string;
   no: string;
   label: string;
-  file?: string;
-  ada?: boolean;
   varian?: 'terang' | 'gelap';
-  rasio?: '4:5' | '4:6' | '16:12';
-  alt?: string;
   prioritas?: boolean;
 }
-const {
-  no, label, file,
-  ada = false,
-  varian = 'terang',
-  rasio = '4:5',
-  alt = '',
-  prioritas = false,
-} = Astro.props;
+const { slot, no, label, varian = 'terang', prioritas = false } = Astro.props;
+
+const foto = (await getFoto()).get(slot);
+if (!foto) {
+  throw new Error('Slot foto "' + slot + '" tidak ada di tabel foto. ' +
+    'Tambahkan barisnya lewat SQL, atau perbaiki nama slot di halaman.');
+}
+
+const rasio = bingkai(foto.lebar, foto.tinggi);
 
 // Ukuran intrinsik per rasio, dipakai pada atribut width dan height supaya
 // ruangnya dipesan dan tata letak tidak bergeser saat foto dimuat.
@@ -27,14 +27,13 @@ const DIM: Record<string, [number, number]> = {
 };
 const [w, h] = DIM[rasio];
 ---
-{ada && file
+{foto.berkas
   ? (prioritas
-    ? <img src={'/' + file} alt={alt} width={w} height={h} fetchpriority="high" decoding="async" />
-    : <img src={'/' + file} alt={alt} width={w} height={h} loading="lazy" decoding="async" />)
+    ? <img src={'/assets/foto/' + foto.berkas} alt={foto.alt ?? ''} width={w} height={h} fetchpriority="high" decoding="async" />
+    : <img src={'/assets/foto/' + foto.berkas} alt={foto.alt ?? ''} width={w} height={h} loading="lazy" decoding="async" />)
   : (
     <span class={varian === 'gelap' ? 'ph ph--dark' : 'ph'}>
       <span class="ph__no">{no}</span>
       <span class="ph__label">{label}</span>
-      {file && <span class="ph__file">{file}</span>}
     </span>
   )}
