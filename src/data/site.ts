@@ -37,6 +37,19 @@ export interface Site {
  * Async sejak awal. Di Tahap 2 isi fungsi ini diganti menjadi pengambilan
  * dari Supabase saat build, dan tidak satu pun halaman perlu disunting.
  */
+// Kontak.astro menguji `nilai === null` dengan ketat untuk memutuskan antara
+// cip "belum diisi" dan tautan sungguhan. Basis data bisa berisi string kosong,
+// bukan null, lewat SQL Editor atau penyuntingan sel di dasbor Supabase. Tanpa
+// normalisasi ini kolom seperti itu menghasilkan href="mailto:" bertekstkan
+// kosong, yaitu tautan tak terlihat yang bisa diklik, dan cip-nya tidak muncul.
+// Halaman admin sendiri sudah mengirim null lewat kosongJadiNull(); penjagaan
+// di sini untuk semua jalur selain itu.
+export function bersih(v: string | null | undefined): string | null {
+  if (v === null || v === undefined) return null;
+  const t = v.trim();
+  return t === '' ? null : t;
+}
+
 export async function getSite(): Promise<Site> {
   const { data, error } = await supabase
     .from('pengaturan')
@@ -50,20 +63,27 @@ export async function getSite(): Promise<Site> {
   if (!data) {
     throw new Error('Baris pengaturan id=1 tidak ditemukan.');
   }
-  if (!data.area || data.area.length === 0) {
+  // Disaring SEBELUM diperiksa, bukan sesudah. Kalau urutannya dibalik, kolom
+  // berisi {'', '  '} akan lolos pemeriksaan karena panjangnya 2, lalu menyusut
+  // jadi kosong, dan build yang seharusnya gagal justru berhasil dengan daftar
+  // area kosong.
+  const area: string[] = (data.area ?? [])
+    .map((a: string) => (a ?? '').trim())
+    .filter(Boolean);
+  if (area.length === 0) {
     throw new Error('Kolom area kosong. Isi dulu lewat admin atau SQL.');
   }
 
   return {
     nama: "DH Makeup Studio",
-    area: data.area,
+    area,
     kontak: {
-      whatsapp: data.whatsapp,
-      instagram: data.instagram,
-      email: data.email,
-      jamOperasional: data.jam_operasional,
+      whatsapp: bersih(data.whatsapp),
+      instagram: bersih(data.instagram),
+      email: bersih(data.email),
+      jamOperasional: bersih(data.jam_operasional),
     },
-    kebijakan: { dp: data.dp, pembatalan: data.pembatalan },
+    kebijakan: { dp: bersih(data.dp), pembatalan: bersih(data.pembatalan) },
     nav: [
       { href: "/",           label: "Beranda" },
       { href: "/layanan",    label: "Layanan" },
