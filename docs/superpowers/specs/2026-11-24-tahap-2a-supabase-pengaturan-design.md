@@ -75,6 +75,13 @@ Satu pemicu memperbarui kolom `diperbarui` setiap baris berubah.
 ## 5. Keamanan
 
 ```sql
+-- Izin tabel. Ini LAPIS TERPISAH dari aturan akses baris, dan wajib ada.
+-- Aturan akses baris menentukan baris mana yang boleh disentuh, sedangkan
+-- GRANT menentukan boleh menyentuh tabelnya sama sekali atau tidak. Tanpa
+-- baris ini, proses build gagal membaca dan situs tidak bisa dibangun.
+grant select on public.pengaturan to anon;
+grant select, update on public.pengaturan to authenticated;
+
 alter table pengaturan enable row level security;
 
 create policy "publik boleh baca" on pengaturan
