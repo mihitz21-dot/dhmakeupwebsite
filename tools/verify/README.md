@@ -264,3 +264,96 @@ Skrip keluar dengan kode bukan nol kalau ada kasus yang tidak sesuai harapan.
 
 `mutasi_check_static.py` mendapat satu kasus baru, "tambah gambar ke-11", untuk
 membuktikan suku `<img>` pada hitungan `ph` benar-benar dihitung.
+
+## check_keamanan_foto.py
+
+    set -a; . ./.env; set +a
+    python tools/verify/check_keamanan_foto.py
+
+Mengikuti pola `check_keamanan.py`, tapi sasarannya tabel `foto` dan bucket
+`foto`. Empat pembuktian tanpa login: update baris tabel, unggah berkas ke
+bucket, hapus berkas bucket, lalu insert dan delete baris tabel. Semuanya harus
+DITOLAK.
+
+### Kontrol positif
+
+Dua, dan yang pertama menghentikan skrip kalau gagal:
+
+1. `GET /rest/v1/foto?limit=1&select=slot` harus HTTP 200. Baca publik memang
+   diizinkan dengan sengaja, karena build mengambil seluruh barisnya.
+2. Soal bucket. `GET /storage/v1/bucket/foto` dicoba lebih dulu, tapi endpoint
+   metadata bucket menolak kunci anon dan menjawab `404 NoSuchBucket` walau
+   bucketnya ada, jadi kegagalan di situ BUKAN tanda bucket hilang. Gantinya
+   skrip mendaftar isi bucket lalu mengunduh berkas yang memang ada. Selama
+   bucket masih kosong tidak ada berkas untuk diunduh, jadi kontrol positif
+   kedua DILEWATI dan sebabnya dicetak.
+
+Sudah diukur: `POST /storage/v1/object/list/<nama-bucket-yang-salah>` pun
+menjawab HTTP 200 dan `[]`, jadi balasan 200 dari daftar isi TIDAK membuktikan
+bucketnya ada. Karena itu daftar isi yang berhasil hanya dipakai sebagai bukti
+lemah bahwa layanan storage bisa dihubungi dengan kunci anon, dan skrip
+berhenti kalau daftar isi itu sendiri gagal.
+
+### Tiga penolakan yang TIDAK membuktikan apa pun
+
+Ketiganya sudah diukur terhadap project sungguhan, bukan dugaan:
+
+1. Unggah `text/plain` ditolak `{"statusCode":"415","error":
+   "invalid_mime_type"}`. Itu dari pembatasan jenis berkas bucket, bukan dari
+   aturan akses baris. Pembuktian unggah karena itu memakai `image/jpeg`
+   dengan isi JPEG minimal, dan badan balasannya diwajibkan memuat
+   `row-level security`. Penolakan yang sah berbunyi `{"statusCode":"403",
+   "error":"Unauthorized","message":"new row violates row-level security
+   policy"}`.
+2. `DELETE` berkas yang tidak ada dijawab `{"statusCode":"404","error":
+   "not_found"}`, jadi izinnya kemungkinan belum sempat diperiksa. Pembuktian
+   hapus hanya dijalankan terhadap berkas yang benar-benar terdaftar di bucket.
+   Selama bucket kosong pembuktian itu DILEWATI dengan pesan yang menyebut
+   sebabnya, dan itu BUKAN dihitung lulus.
+3. `DELETE` ke storage dengan header `Content-Type: application/json` dan badan
+   kosong dijawab `400 FastifyError "Body cannot be empty"`. Itu penolakan dari
+   pemeriksaan bentuk permintaan. Karena itu `panggil()` menerima `jenis=None`
+   untuk sengaja tidak mengirim header itu, dan pembuktian hapus mewajibkan
+   badan balasannya menunjukkan penolakan izin.
+
+### Hasil yang terukur hari ini
+
+Kontrol positif 1 lulus (HTTP 200). Kontrol positif 2 dilewati, bucket kosong.
+Update tabel, insert, dan delete baris ditolak HTTP 401 dengan kode Postgres
+`42501`, yaitu izin ditolak di lapisan GRANT sebelum aturan akses baris
+diperiksa. Unggah `image/jpeg` ditolak HTTP 400 dengan `statusCode 403` dan
+`new row violates row-level security policy`. Pembuktian hapus berkas ditunda
+sampai ada berkas sungguhan, yaitu setelah Task 9. Baris `hero` tetap
+`alt: null`, dan `slot-palsu` tidak ada di tabel.
+
+### Uji mutasi
+
+Pada salinan di luar repo, empat cara merusak:
+
+1. Ambang penilaian dibalik, `kode < 400` jadi `kode >= 400`: 4 masalah,
+   exit 1.
+2. Pembuktian insert disasarkan ke `GET /rest/v1/foto?limit=1&select=slot`
+   yang memang diizinkan, sehingga cabang "DITERIMA" benar-benar dijalankan
+   terhadap HTTP 200 sungguhan: 1 masalah, exit 1.
+3. Kontrol positif dihapus lalu dijalankan dengan kunci sengaja salah: skrip
+   mencetak empat baris `OK` padahal tidak menguji apa pun, TAPI tetap 1
+   masalah dan exit 1, karena pemeriksaan badan balasan pada pembuktian unggah
+   menangkap `Invalid Compact JWS`. Jadi pemeriksaan badan itu adalah jaring
+   kedua yang berdiri sendiri.
+4. Kontrol positif DAN pemeriksaan badan balasan dihapus, kunci sengaja salah:
+   lima baris `OK`, `0 masalah`, exit 0. Inilah persis kegagalan Tahap 2a, dan
+   inilah yang dicegah oleh kontrol positif.
+
+Skrip repo yang utuh dijalankan dengan kunci sengaja salah berhenti di kontrol
+positif pertama dengan `1 masalah` dan exit 1. Kode keluarnya diukur langsung,
+tanpa pipa ke `head` atau `tail`, karena yang terbaca akan jadi status
+perintah terakhir di pipa. Berkas repo diperiksa utuh dengan `cmp` sesudahnya.
+
+### Yang BELUM dibuktikan skrip ini
+
+Semua pembuktian di atas memakai kunci anon, yaitu TANPA sesi, jadi namanya
+"tanpa login ditolak", bukan "ditolak". Varian "sudah login" butuh kata sandi
+akun pemilik situs, yang tidak ada di repo dan tidak boleh ada di repo. Selain
+itu, selama bucket masih kosong, dua hal belum terukur: bahwa bucket `foto`
+benar-benar ada dan bisa dibaca publik, dan bahwa hapus berkas tanpa login
+ditolak. Keduanya harus diukur ulang setelah Task 9 menaruh foto pertama.
