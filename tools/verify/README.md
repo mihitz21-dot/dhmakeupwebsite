@@ -169,3 +169,26 @@ Tiap mutasi diperiksa benar-benar mendarat dengan membaca ulang berkasnya dari
 disk sebelum gerbang dijalankan. Tanpa pemeriksaan itu, mutasi yang polanya
 tidak cocok akan tampak sebagai "gerbang tidak menangkap kerusakan", padahal
 yang tidak bekerja adalah skrip ujinya sendiri.
+
+## uji_ambil_foto.mjs
+
+    node tools/verify/uji_ambil_foto.mjs
+
+Berdiri sendiri: menyalakan server tiruan yang meniru dua endpoint Supabase,
+lalu MENJALANKAN `tools/ambil-foto.mjs` apa adanya sebagai proses terpisah di
+folder sementara. Skripnya tidak disalin dan logikanya tidak ditiru, jadi uji
+ini ikut berubah kalau skrip itu disunting.
+
+Alasan uji ini ada: selama bucket masih kosong, jalur SUKSES skrip itu tidak
+bisa dibuktikan terhadap Supabase sungguhan, karena mengunggah butuh sesi login.
+Tanpa uji ini satu-satunya jalur yang pernah terbukti adalah jalur gagal,
+padahal yang menentukan foto jadi terbit atau tidak justru jalur sukses.
+
+Dua belas pemeriksaan dalam tiga kelompok: jalur sukses (berkas benar-benar
+tertulis dan isinya cocok, baris ber-`berkas` null dilewati, penanda `.txt`
+selamat), pembersihan berkas basi, dan jalur gagal (keluar dengan kode bukan
+nol, pesannya menyebut slot yang bermasalah).
+
+Diuji mutasi, lima cara merusak dan kelimanya membuat uji ini merah: tidak
+menulis berkasnya, tidak menghapus berkas basi, mengabaikan unduhan yang gagal,
+ikut menghapus berkas penanda `.txt`, dan melewati semua baris.
