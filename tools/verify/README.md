@@ -49,17 +49,28 @@ membuatnya merah.
 
 ## uji_pantau.mjs
 
-    cd <folder uji> && python -m http.server 8731 --bind 127.0.0.1
-    node tools/verify/uji_pantau.mjs src/scripts/admin.js http://127.0.0.1:8731
+    node tools/verify/uji_pantau.mjs src/scripts/admin.js
 
-Folder uji butuh `ada/index.html` yang memuat
-`<meta name="dibangun" content="...">` dan `tanpa/index.html` yang tidak.
+Berdiri sendiri: menyalakan server HTTP-nya sendiri di port acak dan menyajikan
+halaman ujinya dari memori, jadi tidak ada folder uji yang perlu disiapkan.
 
-Menguji dua fungsi pemantauan build di `src/scripts/admin.js`, kodenya
-diambil dari berkasnya dengan regex supaya uji ini ikut berubah kalau
-berkasnya disunting: `ambilPenanda()` terhadap server HTTP sungguhan, dan
-`tayang()` yang membandingkan waktu build dengan waktu penyimpanan.
+Menguji dua fungsi pemantauan build di `src/scripts/admin.js`, kodenya diambil
+dari berkasnya dengan regex supaya uji ini ikut berubah kalau berkasnya
+disunting: `ambilPenanda()` terhadap server HTTP sungguhan, dan `tayang()` yang
+membandingkan waktu build dengan waktu penyimpanan.
 
-Yang paling penting di sini: build yang lebih TUA daripada waktu penyimpanan
-tidak boleh dianggap tayang. Penanda yang berubah hanya membuktikan ada build
-baru, bukan bahwa build itu membawa nilai yang baru disimpan.
+Yang paling penting di sini adalah kasus "penanda lebih TUA dari waktu simpan
+belum tayang". Penanda `dibangun` yang berubah hanya membuktikan ada build baru
+yang disajikan, bukan bahwa build itu membawa nilai yang baru disimpan. Sebuah
+build yang sudah berjalan dan membaca basis data sesaat sebelum penyimpanan akan
+mengubah penandanya tanpa membawa nilai barunya. Kalau perbandingan waktu ini
+rusak, halaman admin akan bilang "Sudah tayang" untuk perubahan yang belum
+tayang, dan pemilik situs tidak punya cara tahu.
+
+Ada juga halaman uji yang membalas HTTP 503 tapi sengaja MEMUAT penanda. Tanpa
+itu penjagaan `if (!r.ok)` tidak teramati, karena badan halaman galat biasa tidak
+memuat kata "dibangun" sehingga hasilnya tetap `null` walau penjagaannya dihapus.
+
+Diuji mutasi, lima cara merusak dan kelimanya membuat tes merah: membalik arah
+perbandingan, mengabaikan status HTTP, menghapus penjagaan nilai kosong,
+menyalahkan nama di regex penanda, dan membuat `tayang()` selalu true.
