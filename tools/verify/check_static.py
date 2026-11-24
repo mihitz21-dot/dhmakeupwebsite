@@ -20,6 +20,16 @@ HALAMAN = ["index", "kontak", "layanan", "paket", "portofolio", "tentang", "ulas
 # jumlah bingkai foto, tautan mati, em dash, atribut lang, dan zoom. Ketujuhnya
 # tidak ikut bergeser saat data berubah. Pemeriksaan isi yang lebih dalam ada di
 # check_browser.py dan check_interactions.py.
+# Kolom "ph" menghitung POSISI foto, bukan bingkai placeholder. Tiap posisi
+# menggambar tepat satu hal: placeholder selama kolom `berkas` masih null, lalu
+# sebuah <img> begitu foto diunggah lewat halaman admin. Kalau hanya
+# placeholder yang dihitung, gerbang ini merah setiap kali pemilik situs
+# mengunggah foto pertamanya, padahal itu justru yang diinginkan. Angkanya
+# tetap 10, 9, dan 1 karena jumlah posisi tidak berubah, hanya isinya.
+#
+# Ini berbeda dari jumlah kata yang dipensiunkan di atas: jumlah kata tidak
+# punya bentuk tetap yang bermakna setelah data masuk, sedangkan jumlah posisi
+# punya.
 INVARIAN = {
     "index":      {"h1": 1, "section": 6, "ph": 10},
     "kontak":     {"h1": 1, "section": 4, "ph": 0},
@@ -53,7 +63,8 @@ def main(root):
         aktual = {
             "h1": len(re.findall(r"<h1", s)),
             "section": len(re.findall(r"<section", s)),
-            "ph": len(re.findall(r'class="ph[ "]', s)),
+            "ph": (len(re.findall(r'class="ph[ "]', s))
+                   + len(re.findall(r"<img ", s))),
         }
         for k, v in inv.items():
             if aktual[k] != v:

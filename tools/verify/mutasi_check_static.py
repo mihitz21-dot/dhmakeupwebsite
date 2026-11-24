@@ -3,6 +3,7 @@ BASE, WORK = sys.argv[1], sys.argv[2]
 KASUS = [
     ("hapus satu <section>",   "index.html",        "<section", "<div"),
     ("hapus satu bingkai foto","index.html",        'class="ph', 'class="xx'),
+    ("tambah gambar ke-11",    "index.html",        "</body>",  '<img src="/a.jpg" alt="x" width="1" height="1"></body>'),
     ("tambah <h1> kedua",      "kontak/index.html", "</body>",  "<h1>dua</h1></body>"),
     ("sisipkan em dash",       "ulasan/index.html", "</body>",  "<p>teks\u2014teks</p></body>"),
     ("hapus atribut lang",     "tentang/index.html",'<html lang="id"', "<html"),

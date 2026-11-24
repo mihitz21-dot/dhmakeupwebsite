@@ -230,3 +230,37 @@ ditolak dengan pesan berbahasa Indonesia.
 
 Diuji mutasi, empat cara dan keempatnya merah: menghapus alas putih, tidak
 mengecilkan, menyimpan sebagai PNG, dan menerima berkas bukan gambar.
+
+## check_foto.py
+
+    python tools/verify/check_foto.py dist
+
+Memeriksa setiap `<img>` di tujuh halaman: `alt` harus ada dan tidak kosong,
+`width` dan `height` harus ada dan berupa angka. Juga memeriksa tiap berkas di
+`dist/assets/foto/` (kecuali `.txt`) tidak melebihi 500 KB.
+
+Selama seluruh kolom `berkas` di tabel `foto` masih null, keluarannya
+`0 masalah, 0 gambar diperiksa`. Itu BUKAN bukti apa pun. Angka "gambar
+diperiksa" sengaja dicetak supaya hal itu terlihat.
+
+`check_static.py` ikut berubah: kolom `ph` kini menghitung bingkai placeholder
+DITAMBAH `<img>`, karena tiap posisi foto menggambar tepat satu dari keduanya.
+Angkanya tetap 10, 9, dan 1, jadi gerbang tidak merah saat foto pertama
+diunggah.
+
+## mutasi_check_foto.py
+
+    python tools/verify/mutasi_check_foto.py dist <folder-kerja-sementara>
+
+Membuktikan `check_foto.py` bisa MERAH, karena build hari ini tidak memuat satu
+gambar pun. Pada salinan `dist` disuntikkan lima kerusakan: gambar tanpa alt,
+alt kosong, tanpa width, tanpa height, dan berkas 600 KB di
+`assets/foto/besar.jpg`. Ditambah satu kontrol positif: gambar yang sah harus
+lolos dan terhitung sebagai "1 gambar diperiksa", supaya penjaga yang menolak
+segalanya atau tidak membaca apa pun tidak tampak bagus.
+
+Tiap mutasi diperiksa benar-benar mendarat dari disk sebelum gerbang dijalankan.
+Skrip keluar dengan kode bukan nol kalau ada kasus yang tidak sesuai harapan.
+
+`mutasi_check_static.py` mendapat satu kasus baru, "tambah gambar ke-11", untuk
+membuktikan suku `<img>` pada hitungan `ph` benar-benar dihitung.
