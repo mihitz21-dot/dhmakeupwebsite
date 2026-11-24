@@ -15,7 +15,7 @@
 - Seluruh `git config` memakai `--local`. JANGAN `--replace-all` pada `credential.helper`, kunci itu sengaja punya dua nilai.
 - `core.autocrlf=true` ada di config system. JANGAN membandingkan byte berkas disk melawan sumber lain, itu gagal palsu.
 - Jangan menyunting `src/styles/site.css` dan `src/scripts/site.js`.
-- Tidak boleh ada em dash (`,`) di berkas yang dihasilkan.
+- Tidak boleh ada em dash (tanda pisah panjang, U+2014) di berkas yang dihasilkan.
 - Dua environment variable, keduanya publik secara desain: `PUBLIC_SUPABASE_URL` dan `PUBLIC_SUPABASE_ANON_KEY`. Kunci `service_role` TIDAK dipakai dan tidak boleh dipasang di mana pun.
 - Alamat Deploy Hook bersifat rahasia. Tidak boleh masuk repo, peramban, maupun laporan.
 - Sebelum membandingkan apa pun: matikan server lama, hapus `dist`, build ulang. Hasil "identik" palsu pernah terjadi karena server usang.
