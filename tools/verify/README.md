@@ -192,3 +192,15 @@ nol, pesannya menyebut slot yang bermasalah).
 Diuji mutasi, lima cara merusak dan kelimanya membuat uji ini merah: tidak
 menulis berkasnya, tidak menghapus berkas basi, mengabaikan unduhan yang gagal,
 ikut menghapus berkas penanda `.txt`, dan melewati semua baris.
+
+## uji_kecilkan.mjs
+
+    node tools/verify/uji_kecilkan.mjs src/scripts/kecilkan.js
+
+Menguji `ukuranBaru()`, bagian hitungan murni dari `kecilkan.js`. Kodenya
+diambil dari berkasnya dengan regex. `kecilkan()` sendiri menyentuh kanvas dan
+hanya bisa diuji di peramban.
+
+Kasus 16000x1 sengaja ada di luar daftar awal: 8000x10 menyusut ke tinggi 2,
+jadi tidak membuktikan `Math.max(1, ...)`. Hanya 16000x1 (hasil mentah 0,1)
+yang gagal kalau penjaga itu dihapus.
