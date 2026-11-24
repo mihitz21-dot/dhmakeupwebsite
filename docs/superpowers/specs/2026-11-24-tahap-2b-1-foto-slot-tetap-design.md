@@ -114,9 +114,12 @@ melompat saat foto dimuat.
 
 Bingkai dipilih dengan membandingkan `lebar / tinggi` terhadap ketiga rasio yang
 tersedia, lalu mengambil yang selisihnya terkecil: 4:5 bernilai 0,8, 4:6 bernilai
-0,667, dan 16:12 bernilai 1,333. Foto persegi jatuh ke 16:12 karena itu yang
-terdekat. Aturannya ditulis eksplisit supaya hasilnya sama setiap kali, bukan
-bergantung pada urutan pemeriksaan di dalam kode.
+0,667, dan 16:12 bernilai 1,333.
+
+Foto persegi bernilai 1,0, dan yang terdekat adalah 4:5 dengan jarak 0,200.
+Draf pertama spec ini menulis 16:12, dan itu salah hitung: jaraknya 0,333, sama
+persis dengan jarak ke 4:6. Aturannya ditulis eksplisit beserta angkanya supaya
+kekeliruan semacam itu bisa diperiksa, bukan dipercaya.
 
 Dua puluh baris dibuat sekali lewat SQL dengan `berkas` bernilai `null`, dan
 tidak pernah ditambah maupun dihapus di tahap ini.

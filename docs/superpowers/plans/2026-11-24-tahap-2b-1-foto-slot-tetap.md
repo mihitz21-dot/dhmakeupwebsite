@@ -346,7 +346,7 @@ Kasus yang wajib ada:
 bingkai(800, 1000)  -> '4:5'     foto tegak sedang
 bingkai(700, 1050)  -> '4:6'     foto tegak panjang
 bingkai(960, 720)   -> '16:12'   foto melebar
-bingkai(1000, 1000) -> '16:12'   foto persegi, terdekat ke 1.333
+bingkai(1000, 1000) -> '4:5'     foto persegi, jarak 0.200 ke 4:5 vs 0.333 ke dua lainnya
 bingkai(null, null) -> '4:5'     belum diisi, jatuh ke bawaan
 bingkai(800, 0)     -> '4:5'     tinggi nol tidak boleh membagi
 bingkai(1600, 900)  -> '16:12'   foto lanskap lebar
