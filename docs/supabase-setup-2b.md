@@ -90,6 +90,24 @@ create policy "login boleh hapus foto" on storage.objects
 
 Tanpa ketiganya, unggah dari halaman admin ditolak walau sudah login.
 
+**Kalau muncul galat `must be owner of table objects`**, berarti project ini
+tidak mengizinkan menyunting kebijakan storage lewat SQL. Itu wajar di sebagian
+project dan bukan kesalahanmu. Pakai jalur menu sebagai gantinya:
+
+**Storage**, pilih bucket `foto`, tab **Policies**, lalu **New policy**. Buat
+tiga kebijakan, masing-masing dengan target role `authenticated`:
+
+| Nama | Operasi yang dicentang |
+|---|---|
+| `login boleh unggah foto` | INSERT |
+| `login boleh ganti foto` | UPDATE |
+| `login boleh hapus foto` | DELETE |
+
+Biarkan isian ekspresinya pada nilai bawaan, yang sudah membatasi ke bucket ini.
+Jangan mencentang SELECT: baca publik sudah ditangani setelan Public bucket di
+langkah 2, dan menambahkannya di sini hanya menduplikasi hal yang sama di dua
+tempat.
+
 ## 4. Webhook kedua
 
 **Integrations**, **Database Webhooks**, **Create a new hook**. Di dashboard
