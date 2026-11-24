@@ -126,3 +126,22 @@ Penalaran dari skema, bukan pengukuran: `authenticated` hanya diberi
 sebelum aturan akses baris diperiksa. Tidak adanya kebijakan insert dan delete
 adalah lapisan kedua. Pemilik situs tetap perlu memeriksanya sendiri dengan
 sesinya.
+
+## mutasi_check_static.py
+
+    npm run build
+    python tools/verify/mutasi_check_static.py dist <folder-kerja-sementara>
+
+Membuktikan `check_static.py` masih bisa MERAH. Dijalankan setelah invarian
+jumlah kata dipensiunkan, karena mencabut tujuh pemeriksaan dari sebuah gerbang
+menuntut bukti bahwa sisanya belum jadi stempel kosong.
+
+Tujuh kerusakan disuntikkan satu per satu ke salinan `dist`: menghapus satu
+`<section>`, menghapus satu bingkai foto, menambah `<h1>` kedua, menyisipkan em
+dash, menghapus atribut `lang`, memblokir zoom, dan menambah tautan mati.
+Ketujuhnya harus membuat `check_static` melaporkan masalah.
+
+Tiap mutasi diperiksa benar-benar mendarat dengan membaca ulang berkasnya dari
+disk sebelum gerbang dijalankan. Tanpa pemeriksaan itu, mutasi yang polanya
+tidak cocok akan tampak sebagai "gerbang tidak menangkap kerusakan", padahal
+yang tidak bekerja adalah skrip ujinya sendiri.

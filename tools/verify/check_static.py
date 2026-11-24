@@ -1,23 +1,34 @@
 """Pemeriksaan statis atas berkas HTML hasil build."""
-import sys, re, os, glob, html as htmlmod
+import sys, re, os, glob
 
 HALAMAN = ["index", "kontak", "layanan", "paket", "portofolio", "tentang", "ulasan"]
+# Invarian jumlah kata sudah DIPENSIUNKAN, dan itu disengaja.
+#
+# Angkanya dulu 637, 484, 704, 614, 310, 518, dan 325. Tugasnya membuktikan
+# bahwa pemindahan situs lama ke Astro tidak mengubah satu kata pun, dan tugas
+# itu selesai: tujuh halaman terbukti identik, termasuk tangkapan layar yang
+# sama byte demi byte.
+#
+# Angka-angka itu hanya berlaku selama tabel `pengaturan` masih kosong. Begitu
+# nomor WhatsApp diisi lewat halaman admin, cip "[NOMOR WHATSAPP]" yang dua kata
+# berubah menjadi tautan satu kata, dan ketujuh angka bergeser. Itu memang yang
+# diinginkan, bukan regresi. Mempertahankannya berarti gerbang ini akan merah
+# setiap kali pemilik situs mengubah pengaturannya, dan gerbang yang selalu
+# merah akan diabaikan orang sampai ia berhenti berguna sama sekali.
+#
+# Penjaga yang tersisa di berkas ini adalah struktur: jumlah h1, jumlah section,
+# jumlah bingkai foto, tautan mati, em dash, atribut lang, dan zoom. Ketujuhnya
+# tidak ikut bergeser saat data berubah. Pemeriksaan isi yang lebih dalam ada di
+# check_browser.py dan check_interactions.py.
 INVARIAN = {
-    "index":      {"h1": 1, "section": 6, "ph": 10, "kata": 637},
-    "kontak":     {"h1": 1, "section": 4, "ph": 0,  "kata": 484},
-    "layanan":    {"h1": 1, "section": 5, "ph": 0,  "kata": 704},
-    "paket":      {"h1": 1, "section": 5, "ph": 0,  "kata": 614},
-    "portofolio": {"h1": 1, "section": 3, "ph": 9,  "kata": 310},
-    "tentang":    {"h1": 1, "section": 5, "ph": 1,  "kata": 518},
-    "ulasan":     {"h1": 1, "section": 4, "ph": 0,  "kata": 325},
+    "index":      {"h1": 1, "section": 6, "ph": 10},
+    "kontak":     {"h1": 1, "section": 4, "ph": 0},
+    "layanan":    {"h1": 1, "section": 5, "ph": 0},
+    "paket":      {"h1": 1, "section": 5, "ph": 0},
+    "portofolio": {"h1": 1, "section": 3, "ph": 9},
+    "tentang":    {"h1": 1, "section": 5, "ph": 1},
+    "ulasan":     {"h1": 1, "section": 4, "ph": 0},
 }
-
-def teks(s):
-    b = s[s.find("<body"):]
-    b = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", b, flags=re.S)
-    b = re.sub(r"<!--.*?-->", " ", b, flags=re.S)
-    b = re.sub(r"<[^>]+>", " ", b)
-    return htmlmod.unescape(b).split()
 
 def cari(root, nama):
     for p in (os.path.join(root, nama, "index.html"),
@@ -43,7 +54,6 @@ def main(root):
             "h1": len(re.findall(r"<h1", s)),
             "section": len(re.findall(r"<section", s)),
             "ph": len(re.findall(r'class="ph[ "]', s)),
-            "kata": len(teks(s)),
         }
         for k, v in inv.items():
             if aktual[k] != v:
