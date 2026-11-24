@@ -69,3 +69,19 @@ input[type="password"]:focus { border-color: var(--rose); }
   background: var(--paper);
 }
 .adm-tabpanel { margin-top: var(--s-3); }
+
+/* Kolom kanan baris foto wajib boleh menyusut. Item grid bawaannya punya
+   min-width auto, sehingga isi terlebar di dalamnya (kolom isian keterangan)
+   memaksa kolomnya melebar melewati layar. Di lebar 390 piksel ujung kolom
+   isian terukur sampai x=447 dan terpotong diam-diam oleh overflow hidden
+   milik .band, jadi pemilik situs tidak bisa melihat apa yang dia ketik. */
+.adm-foto-baris > div { min-width: 0; }
+.adm-foto-baris input[type="text"] { max-width: 100%; }
+
+/* Kolom pilih berkas punya lebar bawaan besar dari peramban, terukur 339
+   piksel, dan sebagai item flex ia menolak menyusut. Di lebar 390 ujungnya
+   sampai x=447 dan terpotong diam-diam, sehingga tombol pilih berkas tidak
+   bisa dijangkau di ponsel. Itu kontrol yang justru harus disentuh untuk
+   memilih foto. */
+.adm-foto-aksi { min-width: 0; }
+.adm-foto-aksi input[type="file"] { min-width: 0; max-width: 100%; flex: 1 1 10rem; }
