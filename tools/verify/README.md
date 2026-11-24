@@ -357,3 +357,22 @@ akun pemilik situs, yang tidak ada di repo dan tidak boleh ada di repo. Selain
 itu, selama bucket masih kosong, dua hal belum terukur: bahwa bucket `foto`
 benar-benar ada dan bisa dibaca publik, dan bahwa hapus berkas tanpa login
 ditolak. Keduanya harus diukur ulang setelah Task 9 menaruh foto pertama.
+
+## uji_telepon.mjs
+
+    node tools/verify/uji_telepon.mjs src/lib/telepon.ts
+
+Menguji `nomorE164()` di `src/lib/telepon.ts`. Kodenya diambil dari berkasnya
+dengan regex, bukan ditulis ulang.
+
+Kenapa uji ini ada: tautan `wa.me` yang salah bentuk GAGAL DIAM-DIAM. Situs ini
+pernah tayang dengan `wa.me/085210009795`, yang tidak pernah sampai ke chat,
+sementara alamatnya tetap menjawab HTTP 200 dan halamannya tetap terbuka.
+Pembedanya hanya ada di isi halaman: nomor yang dikenali memberi og:title
+"DH Makeup Studio", sedangkan yang tidak dikenali memberi "Share on WhatsApp",
+sama seperti nomor ngawur. Tidak satu pun gerbang menangkapnya selama berhari
+hari, dan untuk usaha yang jalannya lewat WhatsApp itu satu-satunya tombol yang
+benar-benar penting.
+
+Lima belas kasus: delapan bentuk yang biasa ditulis orang Indonesia, dan tujuh
+yang harus ditolak. Diuji mutasi empat cara dan keempatnya merah.

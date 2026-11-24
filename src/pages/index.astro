@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { teleponPlus } from '../lib/telepon';
 import Plate from '../components/Plate.astro';
 import PhotoSlot from '../components/PhotoSlot.astro';
 import { getSite, rupiah } from '../data/site';
@@ -27,18 +28,10 @@ const gambarLd = new URL(
   Astro.site,
 ).href;
 
-// Nomor WhatsApp disimpan dalam format lokal ("08...") karena itu yang ditulis
-// pemilik situs di halaman admin. Schema.org meminta nomor telepon yang bisa
-// dihubungi lintas negara, jadi di sini saja nomornya diubah ke bentuk +62.
-function keE164(nomor: string): string | null {
-  const angka = nomor.replace(/\D/g, '');
-  if (angka.length < 9) return null;
-  if (angka.startsWith('62')) return '+' + angka;
-  if (angka.startsWith('0')) return '+62' + angka.slice(1);
-  return '+' + angka;
-}
-
-const telepon = site.kontak.whatsapp ? keE164(site.kontak.whatsapp) : null;
+// Nomor WhatsApp disimpan dalam format lokal ("08...") karena itu yang
+// ditulis pemilik situs di halaman admin. Schema menuntut bentuk +62, dan
+// wa.me menuntut 62 tanpa plus, jadi keduanya diambil dari lib/telepon.
+const telepon = site.kontak.whatsapp ? teleponPlus(site.kontak.whatsapp) : null;
 const instagram = site.kontak.instagram
   ? 'https://instagram.com/' + site.kontak.instagram.replace(/^@/, '')
   : null;

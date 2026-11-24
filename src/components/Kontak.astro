@@ -1,5 +1,6 @@
 ---
 import { getSite } from '../data/site';
+import { tautanWhatsApp } from '../lib/telepon';
 
 interface Props { jenis: 'whatsapp' | 'instagram' | 'email'; }
 const { jenis } = Astro.props;
@@ -13,12 +14,20 @@ const LABEL = {
   email: 'ALAMAT EMAIL',
 } as const;
 
-function tautan(j: string, v: string): string {
-  if (j === 'whatsapp') return 'https://wa.me/' + v.replace(/\D/g, '');
+function tautan(j: string, v: string): string | null {
+  // wa.me menuntut kode negara tanpa nol di depan. Bentuk lama
+  // 'wa.me/' + v.replace(/\D/g,'') menghasilkan wa.me/085210009795, yang
+  // TIDAK sampai ke chat dan tetap menjawab HTTP 200, jadi kerusakannya
+  // tidak terlihat dari luar.
+  if (j === 'whatsapp') return tautanWhatsApp(v);
   if (j === 'instagram') return 'https://instagram.com/' + v.replace(/^@/, '');
   return 'mailto:' + v;
 }
+
+// Nomor yang tidak masuk akal tidak digambar sebagai tautan, karena tautan
+// yang tidak membawa ke mana-mana lebih buruk daripada cip 'belum diisi'.
+const alamat = nilai === null ? null : tautan(jenis, nilai);
 ---
-{nilai === null
+{nilai === null || alamat === null
   ? <span class="pending">[{LABEL[jenis]}]</span>
-  : <a class="kontak-tautan" href={tautan(jenis, nilai)}>{nilai}</a>}
+  : <a class="kontak-tautan" href={alamat}>{nilai}</a>}
