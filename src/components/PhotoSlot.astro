@@ -7,6 +7,7 @@ interface Props {
   varian?: 'terang' | 'gelap';
   rasio?: '4:5' | '4:6' | '16:12';
   alt?: string;
+  prioritas?: boolean;
 }
 const {
   no, label, file,
@@ -14,6 +15,7 @@ const {
   varian = 'terang',
   rasio = '4:5',
   alt = '',
+  prioritas = false,
 } = Astro.props;
 
 // Ukuran intrinsik per rasio, dipakai pada atribut width dan height supaya
@@ -26,7 +28,9 @@ const DIM: Record<string, [number, number]> = {
 const [w, h] = DIM[rasio];
 ---
 {ada && file
-  ? <img src={'/' + file} alt={alt} width={w} height={h} loading="lazy" decoding="async" />
+  ? (prioritas
+    ? <img src={'/' + file} alt={alt} width={w} height={h} fetchpriority="high" decoding="async" />
+    : <img src={'/' + file} alt={alt} width={w} height={h} loading="lazy" decoding="async" />)
   : (
     <span class={varian === 'gelap' ? 'ph ph--dark' : 'ph'}>
       <span class="ph__no">{no}</span>

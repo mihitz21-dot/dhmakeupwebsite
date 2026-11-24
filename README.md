@@ -26,7 +26,10 @@ memperbarui seluruh tempat yang memakainya.
 
 ## Mengisi foto
 
-Lihat `public/assets/foto/LETAKKAN-FOTO-DI-SINI.txt`.
+Taruh berkas di `public/assets/foto/`, lalu pada `PhotoSlot` yang sesuai di
+`src/pages/<halaman>.astro` tambahkan `ada={true}` dan `alt="..."` (wajib). Foto yang
+terlihat tanpa menggulir juga memakai `prioritas={true}`. Daftar nama berkas dan rasio
+ada di `public/assets/foto/LETAKKAN-FOTO-DI-SINI.txt`.
 
 ## Verifikasi
 

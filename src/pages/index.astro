@@ -84,10 +84,10 @@ const site = await getSite();
       <Plate no="03" label="Jenis acara" class="reveal" />
       <h2 class="h2 reveal" id="acara-h">Acara yang biasa kami tangani</h2>
 
-      <!-- Lima plat kecil di daftar ini: assets/foto/acara-01.jpg sampai
-           acara-05.jpg, rasio 3:4. Ganti isi tiap .occ__thumb dengan
-           <img src="assets/foto/acara-0N.jpg" alt="..." width="." height="."
-           loading="lazy" decoding="async"> saat fotonya sudah ada. -->
+      <!-- Lima plat kecil di daftar ini: acara-01.jpg sampai acara-05.jpg,
+           rasio 4:5. Tiap PhotoSlot di .occ__thumb belum punya file=. Untuk
+           memasang, tambahkan file="assets/foto/acara-0N.jpg", ada={true},
+           dan alt="..." -> panduan di berkas LETAKKAN. -->
       <ul class="lineup reveal" style="margin-top:3rem;">
         <li><a href="/layanan#wedding">
           <span class="occ__thumb"><PhotoSlot no="01" label="Wedding" varian="gelap" rasio="4:5" /></span>

@@ -4,55 +4,68 @@ Folder foto DH Makeup Studio
 Setiap bingkai kosong di situs menuliskan nama berkas yang dicarinya.
 Taruh fotonya di folder ini dengan nama persis seperti itu.
 
-Daftar slot dan rasio yang sudah dipesan:
+Daftar slot, halaman, dan rasio (nilai rasio dibaca dari berkas .astro):
 
-  hero.jpg          4:5    potret utama di beranda
-  perias.jpg        4:5    potret perias di halaman Tentang
+  hero.jpg          4:5    index.astro      potret utama di beranda
+  perias.jpg        4:5    tentang.astro    potret perias di halaman Tentang
 
-  beranda-01.jpg    4:6    rias pengantin
-  beranda-02.jpg    16:12  lamaran
-  beranda-03.jpg    16:12  natural
-  beranda-04.jpg    4:6    kids makeup
+  beranda-01.jpg    4:6    index.astro      rias pengantin
+  beranda-02.jpg    16:12  index.astro      lamaran
+  beranda-03.jpg    16:12  index.astro      natural
+  beranda-04.jpg    4:6    index.astro      kids makeup
 
-  acara-01.jpg      4:5    plat kecil di daftar acara, wedding
-  acara-02.jpg      4:5    plat kecil di daftar acara, lamaran
-  acara-03.jpg      4:5    plat kecil di daftar acara, pre-wedding
-  acara-04.jpg      4:5    plat kecil di daftar acara, wisuda
-  acara-05.jpg      4:5    plat kecil di daftar acara, photoshoot
+  acara-01.jpg      4:5    index.astro      plat kecil di daftar acara, wedding
+  acara-02.jpg      4:5    index.astro      plat kecil di daftar acara, lamaran
+  acara-03.jpg      4:5    index.astro      plat kecil di daftar acara, pre-wedding
+  acara-04.jpg      4:5    index.astro      plat kecil di daftar acara, wisuda
+  acara-05.jpg      4:5    index.astro      plat kecil di daftar acara, photoshoot
 
-  plat-01.jpg       16:11  soft glam
-  plat-02.jpg       4:6    soft glam
-  plat-03.jpg       4:6    natural
-  plat-04.jpg       4:6    adat
-  plat-05.jpg       4:6    photoshoot
-  plat-06.jpg       16:11  natural
-  plat-07.jpg       16:11  photoshoot
-  plat-08.jpg       4:6    soft glam
-  plat-09.jpg       4:6    di balik layar
+  plat-01.jpg       4:6    portofolio.astro soft glam
+  plat-02.jpg       16:12  portofolio.astro soft glam
+  plat-03.jpg       16:12  portofolio.astro natural
+  plat-04.jpg       4:6    portofolio.astro adat
+  plat-05.jpg       4:6    portofolio.astro photoshoot
+  plat-06.jpg       4:6    portofolio.astro natural
+  plat-07.jpg       4:6    portofolio.astro kids makeup
+  plat-08.jpg       16:12  portofolio.astro soft glam
+  plat-09.jpg       4:6    portofolio.astro di balik layar
 
-Plat kecil pada daftar acara di beranda hanya menampilkan nomornya saja,
-tanpa tulisan nama berkas, supaya tidak ramai. Nomor pada plat itu sama
-dengan nomor berkasnya: plat bernomor 03 diisi acara-03.jpg.
+Rasio hanya mengenal tiga nilai: 4:5, 4:6, dan 16:12. Potong foto sesuai
+rasio slotnya sebelum ditaruh di sini.
 
-Setelah berkasnya ada, ganti isi bingkai di HTML. Contoh, dari:
+Cara memasang
+-------------
 
-  <div class="ph"><span class="ph__no">01</span>...</div>
+1. Taruh berkasnya di folder ini (public/assets/foto/), nama persis.
+2. Buka halaman yang sesuai di src/pages/<halaman>.astro, cari PhotoSlot
+   untuk slot itu, lalu tambahkan ada={true} dan alt="...". Contoh:
 
-menjadi:
+     <PhotoSlot no="01" label="Soft glam" file="assets/foto/plat-01.jpg"
+                rasio="4:6" ada={true} alt="Rias soft glam dengan bibir nude" />
 
-  <img src="assets/foto/plat-01.jpg"
-       alt="Jelaskan riasannya, bukan nama orangnya"
-       width="960" height="660" loading="lazy" decoding="async">
+   Jangan menulis tag <img> sendiri. PhotoSlot yang menyusun <img> beserta
+   width, height, dan loading sesuai rasio.
 
-Untuk foto pertama yang terlihat tanpa menggulir (hero.jpg, perias.jpg,
-dan plat-01.jpg), ganti loading="lazy" dengan fetchpriority="high" supaya
-peramban memuatnya lebih dulu.
+Lima plat kecil di daftar acara beranda (acara-01 sampai acara-05) belum
+punya file= di PhotoSlot-nya. Untuk memasangnya, tambahkan juga
+file="assets/foto/acara-0N.jpg" selain ada={true} dan alt.
 
-Tiga hal yang perlu dijaga:
+Foto yang terlihat tanpa menggulir
+----------------------------------
 
-1. Tulis width dan height sesuai ukuran asli berkasnya. Tanpa itu, tata
-   letak akan melompat saat foto selesai dimuat.
-2. Isi alt dengan deskripsi riasannya, bukan nama klien. Alt dibaca
-   pembaca layar dan terindeks mesin pencari.
+hero.jpg, perias.jpg, dan plat-01.jpg terlihat tanpa menggulir. Pada
+PhotoSlot ketiganya tambahkan juga prioritas={true}. Dengan itu <img>
+memakai fetchpriority="high" dan tanpa loading="lazy", sehingga peramban
+memuatnya lebih dulu. Foto lain dibiarkan tanpa prioritas (dimuat malas).
+
+Hal yang perlu dijaga
+---------------------
+
+1. alt WAJIB diisi. Gambar tanpa alt dianggap dekoratif oleh pembaca
+   layar dan dilewati begitu saja. Foto portofolio jelas bukan dekorasi.
+   Tulis deskripsi riasannya, bukan nama klien. Alt juga terindeks mesin
+   pencari.
+2. Ukuran berkas: kecilkan dan kompres sebelum dipasang, supaya halaman
+   tetap ringan.
 3. Pastikan klien mengizinkan fotonya dipakai di situs, bukan hanya di
    Instagram. Simpan izinnya, cukup tangkapan layar percakapan.
