@@ -3,18 +3,19 @@ import sys, re, os, glob, html as htmlmod
 
 HALAMAN = ["index", "kontak", "layanan", "paket", "portofolio", "tentang", "ulasan"]
 INVARIAN = {
-    "index":      {"h1": 1, "section": 6, "ph": 10, "kata": 642},
+    "index":      {"h1": 1, "section": 6, "ph": 10, "kata": 637},
     "kontak":     {"h1": 1, "section": 4, "ph": 0,  "kata": 484},
     "layanan":    {"h1": 1, "section": 5, "ph": 0,  "kata": 704},
     "paket":      {"h1": 1, "section": 5, "ph": 0,  "kata": 614},
     "portofolio": {"h1": 1, "section": 3, "ph": 9,  "kata": 310},
     "tentang":    {"h1": 1, "section": 5, "ph": 1,  "kata": 518},
-    "ulasan":     {"h1": 1, "section": 4, "ph": 0,  "kata": 343},
+    "ulasan":     {"h1": 1, "section": 4, "ph": 0,  "kata": 325},
 }
 
 def teks(s):
     b = s[s.find("<body"):]
     b = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", b, flags=re.S)
+    b = re.sub(r"<!--.*?-->", " ", b, flags=re.S)
     b = re.sub(r"<[^>]+>", " ", b)
     return htmlmod.unescape(b).split()
 
