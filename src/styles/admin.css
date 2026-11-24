@@ -1,0 +1,25 @@
+/* Gaya khusus admin. site.css tidak boleh disentuh, jadi yang khas admin
+   tinggal di sini. */
+
+/* site.css memberi gaya pada input text, tel, email, date, select, dan
+   textarea, tapi tidak pada input password, karena situs lama tidak punya
+   kolom sandi. Tanpa ini kolom sandi tampil mentah dan hanya 21 piksel
+   tingginya, jadi gagal syarat target sentuh 44 piksel. Nilainya disamakan
+   dengan input lain di site.css, bukan diubah. */
+input[type="password"] {
+  width: 100%; min-height: 50px; padding: 0.75rem 0.9rem;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r);
+  color: var(--ink); font: inherit; font-size: 0.95rem;
+  transition: border-color var(--t), box-shadow var(--t);
+}
+/* input:focus di site.css punya kebobotan sama dengan aturan di atas, dan
+   admin.css dimuat sesudahnya, jadi border-color saat fokus perlu ditegaskan
+   di sini supaya kolom sandi ikut memerah seperti kolom lain. */
+input[type="password"]:focus { border-color: var(--rose); }
+
+.adm-login { max-width: 24rem; margin-top: 2rem; }
+.adm-panel { margin-top: 2rem; }
+.adm-baris { display: grid; gap: var(--s-2); margin-bottom: var(--s-2); }
+@media (min-width: 46rem) { .adm-baris { grid-template-columns: 1fr 1fr; } }
+.adm-bar { position: sticky; bottom: 0; background: var(--canvas);
+  border-top: 1px solid var(--rule); padding: var(--s-2) 0; margin-top: var(--s-3); }
