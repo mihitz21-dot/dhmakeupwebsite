@@ -161,7 +161,12 @@ curl -s -o /dev/null -w "  HTTP %{http_code}\n" \
 
 Expected: 20 baris, 0 berkas terisi, dan kedua puluh kunci slot persis seperti di spec bagian 3.
 
-Untuk bucket, HTTP **400** atau **404** berarti bucket ADA tapi berkasnya tidak ada, dan itu yang diharapkan. HTTP **404** dengan pesan `Bucket not found` di badan balasan berarti bucket BELUM dibuat. Periksa badan balasannya, jangan hanya kodenya:
+Untuk bucket, KODE HTTP TIDAK BISA DIPAKAI MEMBEDAKAN. Sudah diukur: bucket yang tidak ada dan nama bucket yang dikarang sembarangan sama-sama membalas HTTP **400**. Yang membedakan hanya badan balasannya:
+
+- badan memuat `Bucket not found` berarti bucket BELUM dibuat
+- badan memuat `Object not found` atau sejenisnya berarti bucket SUDAH ada dan hanya berkasnya yang tidak ada, dan itu yang diharapkan
+
+Jadi baca badan balasannya, jangan kodenya:
 
 ```bash
 curl -s "$PUBLIC_SUPABASE_URL/storage/v1/object/public/foto/tidak-ada.jpg" | head -c 200; echo
