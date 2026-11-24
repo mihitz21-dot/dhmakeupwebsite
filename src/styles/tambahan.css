@@ -1,0 +1,14 @@
+/* Gaya tambahan untuk hal yang muncul SESUDAH situs lama diporting.
+   site.css tidak boleh disunting karena wajib tetap identik byte demi byte
+   dengan situs lama, jadi apa pun yang baru tinggal di sini. */
+
+/* Cip "belum diisi" punya bantalan yang membuatnya cukup besar disentuh.
+   Tautan sungguhan yang menggantikannya tidak mewarisi apa pun, dan terukur
+   hanya 19 piksel tingginya. Akibatnya mengisi nomor kontak justru membuat
+   halaman lebih sulit dipakai di ponsel, yang merupakan kebalikan dari
+   maksudnya. Syarat target sentuh 44 piksel ada supaya jari tidak meleset. */
+.kontak-tautan {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
