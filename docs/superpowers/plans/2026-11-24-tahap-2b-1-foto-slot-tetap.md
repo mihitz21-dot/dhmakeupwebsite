@@ -687,10 +687,16 @@ ukuranBaru(3000, 4000, 1600) -> {lebar:1200, tinggi:1600}   potret besar
 ukuranBaru(1200,  900, 1600) -> {lebar:1200, tinggi:900}    sudah kecil, dibiarkan
 ukuranBaru(1600, 1600, 1600) -> {lebar:1600, tinggi:1600}   persis di batas
 ukuranBaru(0, 0, 1600)       -> {lebar:0, tinggi:0}         tidak membagi nol
-ukuranBaru(8000, 10, 1600)   -> {lebar:1600, tinggi:2}      sisi pendek tidak jadi nol
+ukuranBaru(8000, 10, 1600)   -> {lebar:1600, tinggi:2}      rasio ekstrem
+ukuranBaru(16000, 1, 1600)   -> {lebar:1600, tinggi:1}      sisi pendek tidak jadi nol
 ```
 
-Kasus terakhir penting: tanpa `Math.max(1, ...)` hasilnya 0 dan kanvas berukuran nol menghasilkan gambar kosong.
+Kasus TERAKHIR yang penting, dan hanya yang terakhir. Draf pertama rencana ini
+hanya memuat `8000x10` dan menyebutnya penguji `Math.max(1, ...)`. Itu keliru:
+10 dikali 0,2 sama dengan 2, jadi hasilnya 2 dengan atau tanpa penjaga, dan
+mutasi yang menghapus penjaganya tetap lolos. Yang benar-benar menguji adalah
+`16000x1`, karena 1 dikali 0,1 dibulatkan menjadi 0, dan kanvas berukuran nol
+menghasilkan gambar kosong.
 
 - [ ] **Step 3: Buktikan tesnya bisa MERAH**
 

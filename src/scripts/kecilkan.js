@@ -35,7 +35,14 @@ export async function kecilkan(file) {
   const kanvas = document.createElement('canvas');
   kanvas.width = lebar;
   kanvas.height = tinggi;
-  kanvas.getContext('2d').drawImage(bitmap, 0, 0, lebar, tinggi);
+  const ctx = kanvas.getContext('2d');
+  // Kanvas dimulai transparan dan JPEG tidak mengenal transparansi, sehingga
+  // bagian transparan jatuh ke HITAM saat disimpan. Bucket menerima PNG, jadi
+  // tanpa alas putih ini sebuah PNG berlatar transparan akan tampil berlatar
+  // hitam di situs, dan sebabnya tidak akan jelas bagi siapa pun.
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, lebar, tinggi);
+  ctx.drawImage(bitmap, 0, 0, lebar, tinggi);
   bitmap.close();
 
   const blob = await new Promise((res) => kanvas.toBlob(res, 'image/jpeg', MUTU));

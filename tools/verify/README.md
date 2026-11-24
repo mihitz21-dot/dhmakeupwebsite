@@ -204,3 +204,29 @@ hanya bisa diuji di peramban.
 Kasus 16000x1 sengaja ada di luar daftar awal: 8000x10 menyusut ke tinggi 2,
 jadi tidak membuktikan `Math.max(1, ...)`. Hanya 16000x1 (hasil mentah 0,1)
 yang gagal kalau penjaga itu dihapus.
+
+## uji_kecilkan_peramban.py
+
+    python tools/verify/uji_kecilkan_peramban.py
+
+Berdiri sendiri: menyalin `src/scripts/kecilkan.js` ke folder sementara,
+menyalakan server di port acak, lalu menjalankan fungsinya di Chromium.
+Berkasnya yang dipakai, bukan salinan isinya, jadi uji ini ikut berubah kalau
+berkas itu disunting.
+
+`uji_kecilkan.mjs` hanya menguji `ukuranBaru()`, yang murni hitungan.
+`kecilkan()` menyentuh kanvas dan hanya bisa diuji di peramban, dan di situlah
+cacat yang paling merugikan bersembunyi.
+
+Yang paling penting di sini: **area transparan harus jadi putih, bukan hitam.**
+Kanvas dimulai transparan dan JPEG tidak mengenal transparansi, sehingga tanpa
+alas putih sebuah PNG berlatar transparan tersimpan berlatar hitam. Bucket
+menerima PNG, jadi ini bukan kemungkinan teoretis, dan sebabnya tidak akan
+jelas bagi siapa pun yang melihat hasilnya.
+
+Enam pemeriksaan: tipe keluaran, alas putih, isi gambar tidak rusak, foto besar
+dikecilkan ke sisi 1600, hasilnya di bawah 500 KB, dan berkas bukan gambar
+ditolak dengan pesan berbahasa Indonesia.
+
+Diuji mutasi, empat cara dan keempatnya merah: menghapus alas putih, tidak
+mengecilkan, menyimpan sebagai PNG, dan menerima berkas bukan gambar.
