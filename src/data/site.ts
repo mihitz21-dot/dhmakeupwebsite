@@ -1,3 +1,5 @@
+import { supabase } from '../lib/supabase';
+
 export interface Paket {
   slug: string;
   nama: string;
@@ -36,16 +38,32 @@ export interface Site {
  * dari Supabase saat build, dan tidak satu pun halaman perlu disunting.
  */
 export async function getSite(): Promise<Site> {
+  const { data, error } = await supabase
+    .from('pengaturan')
+    .select('whatsapp, instagram, email, jam_operasional, dp, pembatalan, area')
+    .eq('id', 1)
+    .single();
+
+  if (error) {
+    throw new Error('Gagal mengambil pengaturan dari Supabase: ' + error.message);
+  }
+  if (!data) {
+    throw new Error('Baris pengaturan id=1 tidak ditemukan.');
+  }
+  if (!data.area || data.area.length === 0) {
+    throw new Error('Kolom area kosong. Isi dulu lewat admin atau SQL.');
+  }
+
   return {
     nama: "DH Makeup Studio",
-    area: ["Bandung", "Subang", "Cimahi", "Jakarta"],
+    area: data.area,
     kontak: {
-      whatsapp: null,
-      instagram: null,
-      email: null,
-      jamOperasional: null,
+      whatsapp: data.whatsapp,
+      instagram: data.instagram,
+      email: data.email,
+      jamOperasional: data.jam_operasional,
     },
-    kebijakan: { dp: null, pembatalan: null },
+    kebijakan: { dp: data.dp, pembatalan: data.pembatalan },
     nav: [
       { href: "/",           label: "Beranda" },
       { href: "/layanan",    label: "Layanan" },

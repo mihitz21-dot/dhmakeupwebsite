@@ -4,6 +4,7 @@ dist/
 .vercel/
 .env
 .env.*
+!.env.example
 *.local
 
 # kredensial, tidak pernah masuk repo
